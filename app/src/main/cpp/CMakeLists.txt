@@ -8,6 +8,7 @@ add_library(
         SHARED
         native-lib.cpp
         database.cpp
+        calculos.cpp
 )
 
 # Busca las librerías de Android
