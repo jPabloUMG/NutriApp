@@ -8,6 +8,7 @@ add_library(
         native-lib.cpp
         database.cpp
         calculos.cpp
+        sqlite3.c
 )
 
 find_library(log-lib log)
