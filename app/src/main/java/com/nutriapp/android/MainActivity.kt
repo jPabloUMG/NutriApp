@@ -1,34 +1,51 @@
 package com.nutriapp.android
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
-import com.nutriapp.android.databinding.ActivityMainBinding
+
+import androidx.appcompat.app.AppCompatActivity
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        // Example of a call to a native method
-        binding.sampleText.text = stringFromJNI()
+        // Inicializar base de datos
+        val dbPath = filesDir.absolutePath + "/nutriapp.db"
+        inicializarDB(dbPath)
     }
 
-    /**
-     * A native method that is implemented by the 'android' native library,
-     * which is packaged with this application.
-     */
-    external fun stringFromJNI(): String
+    // ── Funciones C++ ──────────────────────────────────────────
+    external fun inicializarDB(ruta: String): Boolean
+
+    external fun insertarUsuario(
+        nombre: String, edad: Int, genero: String,
+        departamento: String, municipio: String,
+        peso: Float, altura: Float,
+        actividad: String, ocupacion: String, meta: String
+    ): Boolean
+
+    external fun calcularIMC(peso: Float, altura: Float): Float
+
+    external fun calcularTMB(
+        peso: Float, altura: Float,
+        edad: Int, genero: String
+    ): Float
+
+    external fun calcularCaloriasRecomendadas(
+        tmb: Float, actividad: String
+    ): Float
+
+    external fun generarRecomendaciones(
+        peso: Float, altura: Float, edad: Int,
+        genero: String, actividad: String, meta: String,
+        calorias: Float, carbs: Float,
+        proteinas: Float, grasas: Float, azucares: Float
+    ): String
 
     companion object {
-        // Used to load the 'android' library on application startup.
         init {
-            System.loadLibrary("android")
+            System.loadLibrary("nutriapp")
         }
     }
 }
