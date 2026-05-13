@@ -87,5 +87,73 @@ Java_com_nutriapp_android_MainActivity_generarRecomendaciones(
     std::string rec = generarRecomendaciones(resultado);
     return env->NewStringUTF(rec.c_str());
 }
+// Login
+JNIEXPORT jobjectArray JNICALL
+Java_com_nutriapp_android_LoginActivity_verificarLogin(
+        JNIEnv* env, jobject thiz,
+        jstring correo, jstring contrasena) {
 
+    const char* correoChar = env->GetStringUTFChars(correo, nullptr);
+    const char* contrasenaChar = env->GetStringUTFChars(contrasena, nullptr);
+
+    Usuario resultado;
+    bool found = verificarLogin(
+            std::string(correoChar),
+            std::string(contrasenaChar),
+            resultado);
+
+    env->ReleaseStringUTFChars(correo, correoChar);
+    env->ReleaseStringUTFChars(contrasena, contrasenaChar);
+
+    jobjectArray arr = env->NewObjectArray(2,
+                                           env->FindClass("java/lang/String"),
+                                           env->NewStringUTF(""));
+
+    if (found) {
+        env->SetObjectArrayElement(arr, 0,
+                                   env->NewStringUTF(std::to_string(resultado.id).c_str()));
+        env->SetObjectArrayElement(arr, 1,
+                                   env->NewStringUTF(std::to_string(resultado.rol_id).c_str()));
+    } else {
+        env->SetObjectArrayElement(arr, 0, env->NewStringUTF("-1"));
+        env->SetObjectArrayElement(arr, 1, env->NewStringUTF("-1"));
+    }
+    return arr;
+}
+
+// Verificar si usuario tiene perfil
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_LoginActivity_verificarPerfil(
+        JNIEnv* env, jobject thiz, jint usuarioId) {
+    Perfil p = obtenerPerfil(usuarioId);
+    return p.usuario_id > 0;
+}
+
+// Registrar log
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_LoginActivity_registrarLog(
+        JNIEnv* env, jobject thiz,
+        jint usuarioId, jstring accion,
+        jstring detalle, jstring pantalla, jint exitoso) {
+
+    Log l;
+    l.usuario_id = usuarioId;
+    l.accion = env->GetStringUTFChars(accion, nullptr);
+    l.detalle = env->GetStringUTFChars(detalle, nullptr);
+    l.pantalla = env->GetStringUTFChars(pantalla, nullptr);
+    l.fecha_hora = "2026-01-01 00:00:00";
+    l.exitoso = exitoso;
+
+    return insertarLog(l);
+}
+
+// Inicializar DB desde LoginActivity
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_LoginActivity_inicializarDB(
+        JNIEnv* env, jobject thiz, jstring ruta) {
+    const char* rutaChar = env->GetStringUTFChars(ruta, nullptr);
+    bool result = inicializarDB(std::string(rutaChar));
+    env->ReleaseStringUTFChars(ruta, rutaChar);
+    return result;
+}
 } // extern "C"
