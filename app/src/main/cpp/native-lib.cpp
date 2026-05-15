@@ -156,4 +156,79 @@ Java_com_nutriapp_android_LoginActivity_inicializarDB(
     env->ReleaseStringUTFChars(ruta, rutaChar);
     return result;
 }
+// ── REGISTRO ACTIVITY ──────────────────────────────────────────────
+
+JNIEXPORT jint JNICALL
+Java_com_nutriapp_android_RegistroActivity_registrarUsuario(
+        JNIEnv* env, jobject thiz,
+        jstring correo, jstring contrasena) {
+
+    const char* correoChar    = env->GetStringUTFChars(correo, nullptr);
+    const char* contrasenaChar = env->GetStringUTFChars(contrasena, nullptr);
+
+    int nuevoId = registrarUsuario(
+            std::string(correoChar),
+            std::string(contrasenaChar));
+
+    env->ReleaseStringUTFChars(correo, correoChar);
+    env->ReleaseStringUTFChars(contrasena, contrasenaChar);
+    return (jint)nuevoId;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_RegistroActivity_registrarLog(
+        JNIEnv* env, jobject thiz,
+        jint usuarioId, jstring accion,
+        jstring detalle, jstring pantalla, jint exitoso) {
+
+    Log l;
+    l.usuario_id = usuarioId;
+    l.accion     = env->GetStringUTFChars(accion, nullptr);
+    l.detalle    = env->GetStringUTFChars(detalle, nullptr);
+    l.pantalla   = env->GetStringUTFChars(pantalla, nullptr);
+    l.fecha_hora = "2026-01-01 00:00:00";
+    l.exitoso    = exitoso;
+    return insertarLog(l);
+}
+
+// ── PERFIL ACTIVITY ────────────────────────────────────────────────
+
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_PerfilActivity_guardarPerfil(
+        JNIEnv* env, jobject thiz,
+        jint usuarioId, jstring nombre, jint edad,
+        jstring genero, jfloat altura, jfloat peso, jfloat grasa) {
+
+    const char* nombreChar = env->GetStringUTFChars(nombre, nullptr);
+    const char* generoChar = env->GetStringUTFChars(genero, nullptr);
+
+    Perfil p;
+    p.usuario_id      = (int)usuarioId;
+    p.nombre          = std::string(nombreChar);
+    p.edad            = (int)edad;
+    p.genero          = std::string(generoChar);
+    p.altura_cm       = (float)altura;
+
+    env->ReleaseStringUTFChars(nombre, nombreChar);
+    env->ReleaseStringUTFChars(genero, generoChar);
+
+    bool ok = guardarPerfil(p, (float)peso, (float)grasa);
+    return (jboolean)ok;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_PerfilActivity_registrarLog(
+        JNIEnv* env, jobject thiz,
+        jint usuarioId, jstring accion,
+        jstring detalle, jstring pantalla, jint exitoso) {
+
+    Log l;
+    l.usuario_id = usuarioId;
+    l.accion     = env->GetStringUTFChars(accion, nullptr);
+    l.detalle    = env->GetStringUTFChars(detalle, nullptr);
+    l.pantalla   = env->GetStringUTFChars(pantalla, nullptr);
+    l.fecha_hora = "2026-01-01 00:00:00";
+    l.exitoso    = exitoso;
+    return insertarLog(l);
+}
 } // extern "C"

@@ -21,6 +21,17 @@ struct Usuario {
     int activo;
     std::string fecha_registro;
     std::string ultimo_acceso;
+    // campos legacy para compatibilidad con MainActivity
+    std::string nombre;
+    int edad;
+    std::string genero;
+    std::string departamento;
+    std::string municipio;
+    float peso;
+    float altura;
+    std::string actividad;
+    std::string ocupacion;
+    std::string meta;
 };
 
 struct Perfil {
@@ -126,11 +137,16 @@ bool actualizarUltimoAcceso(int usuario_id,
                             const std::string& fecha);
 bool desactivarUsuario(int usuario_id);
 std::vector<Usuario> obtenerTodosUsuarios();
+int  registrarUsuario(const std::string& correo,        // ← NUEVO
+                      const std::string& contrasena);
 
 // Perfil
 bool insertarPerfil(const Perfil& p);
 bool actualizarPerfil(const Perfil& p);
 Perfil obtenerPerfil(int usuario_id);
+bool guardarPerfil(const Perfil& p,                     // ← NUEVO
+                   float peso_lb,
+                   float porcentaje_grasa);
 
 // Mediciones
 bool insertarMedicion(const Medicion& m);
