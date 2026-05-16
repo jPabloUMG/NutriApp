@@ -1,8 +1,13 @@
 package com.nutriapp.android
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.*
+import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -10,94 +15,55 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Inicializar base de datos
+        val prefs     = getSharedPreferences("NutriApp", MODE_PRIVATE)
+        val usuarioId = prefs.getInt("usuario_id", -1)
+
+        if (usuarioId == -1) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+
         val dbPath = filesDir.absolutePath + "/nutriapp.db"
         inicializarDB(dbPath)
 
-        // Referencias a los campos
-        val etNombre = findViewById<EditText>(R.id.etNombre)
-        val etEdad = findViewById<EditText>(R.id.etEdad)
-        val etPeso = findViewById<EditText>(R.id.etPeso)
-        val etAltura = findViewById<EditText>(R.id.etAltura)
-        val spinnerGenero = findViewById<Spinner>(R.id.spinnerGenero)
-        val spinnerActividad = findViewById<Spinner>(R.id.spinnerActividad)
-        val spinnerMeta = findViewById<Spinner>(R.id.spinnerMeta)
-        val btnRegistrar = findViewById<Button>(R.id.btnRegistrar)
-        val tvResultado = findViewById<TextView>(R.id.tvResultado)
+        val tvSaludo           = findViewById<TextView>(R.id.tvSaludo)
+        val tvFecha            = findViewById<TextView>(R.id.tvFecha)
+        val tvCalorias         = findViewById<TextView>(R.id.tvCalorias)
+        val tvCaloriasObjetivo = findViewById<TextView>(R.id.tvCaloriasObjetivo)
+        val tvIMC              = findViewById<TextView>(R.id.tvIMC)
+        val tvPeso             = findViewById<TextView>(R.id.tvPeso)
+        val tvGrasa            = findViewById<TextView>(R.id.tvGrasa)
+        val btnRegistrarComida = findViewById<Button>(R.id.btnRegistrarComida)
+        val btnReportes        = findViewById<Button>(R.id.btnReportes)
 
-        // Opciones de los spinners
-        val opcionesGenero = listOf("masculino", "femenino")
-        val opcionesActividad = listOf("sedentario", "ligero", "moderado", "activo", "muy activo")
-        val opcionesMeta = listOf("bajar", "mantener", "subir")
+        val hoy = SimpleDateFormat("EEEE, dd 'de' MMMM", Locale("es")).format(Date())
+        tvFecha.text = hoy.replaceFirstChar { it.uppercase() }
 
-        spinnerGenero.adapter = ArrayAdapter(this,
-            android.R.layout.simple_spinner_dropdown_item, opcionesGenero)
-        spinnerActividad.adapter = ArrayAdapter(this,
-            android.R.layout.simple_spinner_dropdown_item, opcionesActividad)
-        spinnerMeta.adapter = ArrayAdapter(this,
-            android.R.layout.simple_spinner_dropdown_item, opcionesMeta)
+        val medicion = obtenerUltimaMedicion(usuarioId)
+        if (medicion[0] != "-1") {
+            tvIMC.text   = medicion[0]
+            tvPeso.text  = "${medicion[1]} lb"
+            tvGrasa.text = "${medicion[2]} %"
+            tvCaloriasObjetivo.text = "Objetivo: ${medicion[3]} kcal"
+        }
 
-        // Botón registrar
-        btnRegistrar.setOnClickListener {
-            val nombre = etNombre.text.toString()
-            val edad = etEdad.text.toString().toIntOrNull() ?: 0
-            val peso = etPeso.text.toString().toFloatOrNull() ?: 0f
-            val altura = etAltura.text.toString().toFloatOrNull() ?: 0f
-            val genero = spinnerGenero.selectedItem.toString()
-            val actividad = spinnerActividad.selectedItem.toString()
-            val meta = spinnerMeta.selectedItem.toString()
+        val fechaHoy = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        val calorias = obtenerCaloriasDia(usuarioId, fechaHoy)
+        tvCalorias.text = "${"%.0f".format(calorias)} kcal"
 
-            if (nombre.isEmpty() || peso == 0f || altura == 0f) {
-                Toast.makeText(this, "Por favor completa todos los campos",
-                    Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+        btnRegistrarComida.setOnClickListener {
+            // TODO: RegistroComidaActivity
+        }
 
-            // Guardar usuario
-            insertarUsuario(nombre, edad, genero,
-                "Guatemala", "Guatemala City",
-                peso, altura, actividad, "Estudiante", meta)
-
-            // Calcular IMC
-            val imc = calcularIMC(peso, altura)
-            val tmb = calcularTMB(peso, altura, edad, genero)
-            val caloriasRec = calcularCaloriasRecomendadas(tmb, actividad)
-
-            val categoriaIMC = when {
-                imc < 18.5f -> "Bajo peso"
-                imc < 25.0f -> "Normal"
-                imc < 30.0f -> "Sobrepeso"
-                else -> "Obesidad"
-            }
-
-            tvResultado.text = """
-                ✓ Usuario registrado exitosamente
-                
-                IMC: ${"%.1f".format(imc)} ($categoriaIMC)
-                TMB: ${"%.0f".format(tmb)} kcal
-                Calorías recomendadas: ${"%.0f".format(caloriasRec)} kcal/día
-            """.trimIndent()
-
-            Toast.makeText(this, "¡Registro exitoso!", Toast.LENGTH_SHORT).show()
+        btnReportes.setOnClickListener {
+            // TODO: ReportesActivity
         }
     }
 
     external fun inicializarDB(ruta: String): Boolean
-    external fun insertarUsuario(
-        nombre: String, edad: Int, genero: String,
-        departamento: String, municipio: String,
-        peso: Float, altura: Float,
-        actividad: String, ocupacion: String, meta: String
-    ): Boolean
-    external fun calcularIMC(peso: Float, altura: Float): Float
-    external fun calcularTMB(peso: Float, altura: Float, edad: Int, genero: String): Float
-    external fun calcularCaloriasRecomendadas(tmb: Float, actividad: String): Float
-    external fun generarRecomendaciones(
-        peso: Float, altura: Float, edad: Int,
-        genero: String, actividad: String, meta: String,
-        calorias: Float, carbs: Float,
-        proteinas: Float, grasas: Float, azucares: Float
-    ): String
+    external fun obtenerUltimaMedicion(usuarioId: Int): Array<String>
+    external fun obtenerCaloriasDia(usuarioId: Int, fecha: String): Float
 
     companion object {
         init { System.loadLibrary("nutriapp") }

@@ -10,154 +10,182 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- Título -->
+        <!-- Saludo -->
         <TextView
+            android:id="@+id/tvSaludo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="NutriApp"
-            android:textSize="32sp"
+            android:text="¡Bienvenido!"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="#2E7D32"
-            android:gravity="center"
-            android:layout_marginBottom="8dp"/>
+            android:textColor="#212121"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="4dp"/>
 
         <TextView
+            android:id="@+id/tvFecha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Registro de Usuario"
-            android:textSize="18sp"
-            android:textColor="#666666"
-            android:gravity="center"
+            android:text="Hoy"
+            android:textSize="14sp"
+            android:textColor="#757575"
             android:layout_marginBottom="24dp"/>
 
-        <!-- Nombre -->
-        <TextView
+        <!-- Card calorías -->
+        <androidx.cardview.widget.CardView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nombre completo"
-            android:textColor="#333333"
-            android:layout_marginBottom="4dp"/>
-        <EditText
-            android:id="@+id/etNombre"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ingresa tu nombre"
-            android:inputType="textPersonName"
-            android:background="@android:drawable/edit_text"
-            android:padding="8dp"
-            android:layout_marginBottom="16dp"/>
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFFFFF">
 
-        <!-- Edad -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Edad"
-            android:textColor="#333333"
-            android:layout_marginBottom="4dp"/>
-        <EditText
-            android:id="@+id/etEdad"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ingresa tu edad"
-            android:inputType="number"
-            android:background="@android:drawable/edit_text"
-            android:padding="8dp"
-            android:layout_marginBottom="16dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
-        <!-- Género -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Género"
-            android:textColor="#333333"
-            android:layout_marginBottom="4dp"/>
-        <Spinner
-            android:id="@+id/spinnerGenero"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Calorías de hoy"
+                    android:textSize="14sp"
+                    android:textColor="#757575"/>
 
-        <!-- Peso -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Peso (kg)"
-            android:textColor="#333333"
-            android:layout_marginBottom="4dp"/>
-        <EditText
-            android:id="@+id/etPeso"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ej: 70.5"
-            android:inputType="numberDecimal"
-            android:background="@android:drawable/edit_text"
-            android:padding="8dp"
-            android:layout_marginBottom="16dp"/>
+                <TextView
+                    android:id="@+id/tvCalorias"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0 kcal"
+                    android:textSize="36sp"
+                    android:textStyle="bold"
+                    android:textColor="#4CAF50"/>
 
-        <!-- Altura -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Altura (cm)"
-            android:textColor="#333333"
-            android:layout_marginBottom="4dp"/>
-        <EditText
-            android:id="@+id/etAltura"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ej: 170"
-            android:inputType="numberDecimal"
-            android:background="@android:drawable/edit_text"
-            android:padding="8dp"
-            android:layout_marginBottom="16dp"/>
+                <TextView
+                    android:id="@+id/tvCaloriasObjetivo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Objetivo: -- kcal"
+                    android:textSize="13sp"
+                    android:textColor="#9E9E9E"/>
 
-        <!-- Actividad física -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Nivel de actividad física"
-            android:textColor="#333333"
-            android:layout_marginBottom="4dp"/>
-        <Spinner
-            android:id="@+id/spinnerActividad"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-        <!-- Meta -->
-        <TextView
+        <!-- Card métricas -->
+        <androidx.cardview.widget.CardView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Meta"
-            android:textColor="#333333"
-            android:layout_marginBottom="4dp"/>
-        <Spinner
-            android:id="@+id/spinnerMeta"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"/>
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            app:cardBackgroundColor="#FFFFFF">
 
-        <!-- Botón Registrar -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="20dp">
+
+                <!-- IMC -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="IMC"
+                        android:textSize="12sp"
+                        android:textColor="#757575"/>
+                    <TextView
+                        android:id="@+id/tvIMC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="#212121"/>
+                </LinearLayout>
+
+                <!-- Peso -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Peso"
+                        android:textSize="12sp"
+                        android:textColor="#757575"/>
+                    <TextView
+                        android:id="@+id/tvPeso"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-- lb"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="#212121"/>
+                </LinearLayout>
+
+                <!-- Grasa -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Grasa"
+                        android:textSize="12sp"
+                        android:textColor="#757575"/>
+                    <TextView
+                        android:id="@+id/tvGrasa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="-- %"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="#212121"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Botón registrar comida -->
         <Button
-            android:id="@+id/btnRegistrar"
+            android:id="@+id/btnRegistrarComida"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Registrar Usuario"
-            android:backgroundTint="#2E7D32"
+            android:layout_height="56dp"
+            android:layout_marginBottom="12dp"
+            android:backgroundTint="#4CAF50"
+            android:text="+ Registrar comida"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
-            android:padding="12dp"/>
+            android:textStyle="bold"
+            android:stateListAnimator="@null"/>
 
-        <!-- Resultado IMC -->
-        <TextView
-            android:id="@+id/tvResultado"
+        <!-- Botón reportes -->
+        <Button
+            android:id="@+id/btnReportes"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
+            android:layout_height="56dp"
+            android:layout_marginBottom="32dp"
+            android:backgroundTint="#FFFFFF"
+            android:text="Ver reportes"
+            android:textColor="#4CAF50"
             android:textSize="16sp"
-            android:textColor="#2E7D32"
-            android:gravity="center"
-            android:layout_marginTop="16dp"/>
+            android:stateListAnimator="@null"/>
 
     </LinearLayout>
 </ScrollView>

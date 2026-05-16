@@ -5,6 +5,10 @@
 
 extern "C" {
 
+// ══════════════════════════════════════════════════════════════════
+//  MAIN ACTIVITY
+// ══════════════════════════════════════════════════════════════════
+
 JNIEXPORT jboolean JNICALL
 Java_com_nutriapp_android_MainActivity_inicializarDB(
         JNIEnv* env, jobject thiz, jstring ruta) {
@@ -87,13 +91,26 @@ Java_com_nutriapp_android_MainActivity_generarRecomendaciones(
     std::string rec = generarRecomendaciones(resultado);
     return env->NewStringUTF(rec.c_str());
 }
-// Login
+
+// ══════════════════════════════════════════════════════════════════
+//  LOGIN ACTIVITY
+// ══════════════════════════════════════════════════════════════════
+
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_LoginActivity_inicializarDB(
+        JNIEnv* env, jobject thiz, jstring ruta) {
+    const char* rutaChar = env->GetStringUTFChars(ruta, nullptr);
+    bool result = inicializarDB(std::string(rutaChar));
+    env->ReleaseStringUTFChars(ruta, rutaChar);
+    return result;
+}
+
 JNIEXPORT jobjectArray JNICALL
 Java_com_nutriapp_android_LoginActivity_verificarLogin(
         JNIEnv* env, jobject thiz,
         jstring correo, jstring contrasena) {
 
-    const char* correoChar = env->GetStringUTFChars(correo, nullptr);
+    const char* correoChar    = env->GetStringUTFChars(correo, nullptr);
     const char* contrasenaChar = env->GetStringUTFChars(contrasena, nullptr);
 
     Usuario resultado;
@@ -121,7 +138,6 @@ Java_com_nutriapp_android_LoginActivity_verificarLogin(
     return arr;
 }
 
-// Verificar si usuario tiene perfil
 JNIEXPORT jboolean JNICALL
 Java_com_nutriapp_android_LoginActivity_verificarPerfil(
         JNIEnv* env, jobject thiz, jint usuarioId) {
@@ -129,34 +145,34 @@ Java_com_nutriapp_android_LoginActivity_verificarPerfil(
     return p.usuario_id > 0;
 }
 
-// Registrar log
 JNIEXPORT jboolean JNICALL
 Java_com_nutriapp_android_LoginActivity_registrarLog(
         JNIEnv* env, jobject thiz,
         jint usuarioId, jstring accion,
         jstring detalle, jstring pantalla, jint exitoso) {
 
+    const char* accionChar   = env->GetStringUTFChars(accion, nullptr);
+    const char* detalleChar  = env->GetStringUTFChars(detalle, nullptr);
+    const char* pantallaChar = env->GetStringUTFChars(pantalla, nullptr);
+
     Log l;
     l.usuario_id = usuarioId;
-    l.accion = env->GetStringUTFChars(accion, nullptr);
-    l.detalle = env->GetStringUTFChars(detalle, nullptr);
-    l.pantalla = env->GetStringUTFChars(pantalla, nullptr);
+    l.accion     = std::string(accionChar);
+    l.detalle    = std::string(detalleChar);
+    l.pantalla   = std::string(pantallaChar);
     l.fecha_hora = "2026-01-01 00:00:00";
-    l.exitoso = exitoso;
+    l.exitoso    = exitoso;
+
+    env->ReleaseStringUTFChars(accion, accionChar);
+    env->ReleaseStringUTFChars(detalle, detalleChar);
+    env->ReleaseStringUTFChars(pantalla, pantallaChar);
 
     return insertarLog(l);
 }
 
-// Inicializar DB desde LoginActivity
-JNIEXPORT jboolean JNICALL
-Java_com_nutriapp_android_LoginActivity_inicializarDB(
-        JNIEnv* env, jobject thiz, jstring ruta) {
-    const char* rutaChar = env->GetStringUTFChars(ruta, nullptr);
-    bool result = inicializarDB(std::string(rutaChar));
-    env->ReleaseStringUTFChars(ruta, rutaChar);
-    return result;
-}
-// ── REGISTRO ACTIVITY ──────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
+//  REGISTRO ACTIVITY
+// ══════════════════════════════════════════════════════════════════
 
 JNIEXPORT jint JNICALL
 Java_com_nutriapp_android_RegistroActivity_registrarUsuario(
@@ -181,17 +197,28 @@ Java_com_nutriapp_android_RegistroActivity_registrarLog(
         jint usuarioId, jstring accion,
         jstring detalle, jstring pantalla, jint exitoso) {
 
+    const char* accionChar   = env->GetStringUTFChars(accion, nullptr);
+    const char* detalleChar  = env->GetStringUTFChars(detalle, nullptr);
+    const char* pantallaChar = env->GetStringUTFChars(pantalla, nullptr);
+
     Log l;
     l.usuario_id = usuarioId;
-    l.accion     = env->GetStringUTFChars(accion, nullptr);
-    l.detalle    = env->GetStringUTFChars(detalle, nullptr);
-    l.pantalla   = env->GetStringUTFChars(pantalla, nullptr);
+    l.accion     = std::string(accionChar);
+    l.detalle    = std::string(detalleChar);
+    l.pantalla   = std::string(pantallaChar);
     l.fecha_hora = "2026-01-01 00:00:00";
     l.exitoso    = exitoso;
+
+    env->ReleaseStringUTFChars(accion, accionChar);
+    env->ReleaseStringUTFChars(detalle, detalleChar);
+    env->ReleaseStringUTFChars(pantalla, pantallaChar);
+
     return insertarLog(l);
 }
 
-// ── PERFIL ACTIVITY ────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════
+//  PERFIL ACTIVITY
+// ══════════════════════════════════════════════════════════════════
 
 JNIEXPORT jboolean JNICALL
 Java_com_nutriapp_android_PerfilActivity_guardarPerfil(
@@ -208,12 +235,14 @@ Java_com_nutriapp_android_PerfilActivity_guardarPerfil(
     p.edad            = (int)edad;
     p.genero          = std::string(generoChar);
     p.altura_cm       = (float)altura;
+    p.nivel_actividad = "";
+    p.objetivo        = "";
+    p.modo_pro        = 0;
 
     env->ReleaseStringUTFChars(nombre, nombreChar);
     env->ReleaseStringUTFChars(genero, generoChar);
 
-    bool ok = guardarPerfil(p, (float)peso, (float)grasa);
-    return (jboolean)ok;
+    return (jboolean)guardarPerfil(p, (float)peso, (float)grasa);
 }
 
 JNIEXPORT jboolean JNICALL
@@ -222,13 +251,132 @@ Java_com_nutriapp_android_PerfilActivity_registrarLog(
         jint usuarioId, jstring accion,
         jstring detalle, jstring pantalla, jint exitoso) {
 
+    const char* accionChar   = env->GetStringUTFChars(accion, nullptr);
+    const char* detalleChar  = env->GetStringUTFChars(detalle, nullptr);
+    const char* pantallaChar = env->GetStringUTFChars(pantalla, nullptr);
+
     Log l;
     l.usuario_id = usuarioId;
-    l.accion     = env->GetStringUTFChars(accion, nullptr);
-    l.detalle    = env->GetStringUTFChars(detalle, nullptr);
-    l.pantalla   = env->GetStringUTFChars(pantalla, nullptr);
+    l.accion     = std::string(accionChar);
+    l.detalle    = std::string(detalleChar);
+    l.pantalla   = std::string(pantallaChar);
     l.fecha_hora = "2026-01-01 00:00:00";
     l.exitoso    = exitoso;
+
+    env->ReleaseStringUTFChars(accion, accionChar);
+    env->ReleaseStringUTFChars(detalle, detalleChar);
+    env->ReleaseStringUTFChars(pantalla, pantallaChar);
+
     return insertarLog(l);
 }
+
+// ══════════════════════════════════════════════════════════════════
+//  OBJETIVOS ACTIVITY
+// ══════════════════════════════════════════════════════════════════
+
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_ObjetivosActivity_guardarObjetivo(
+        JNIEnv* env, jobject thiz,
+        jint usuarioId, jstring objetivo, jstring nivelActividad) {
+
+    const char* objetivoChar  = env->GetStringUTFChars(objetivo, nullptr);
+    const char* actividadChar = env->GetStringUTFChars(nivelActividad, nullptr);
+
+    Perfil p = obtenerPerfil((int)usuarioId);
+    p.objetivo        = std::string(objetivoChar);
+    p.nivel_actividad = std::string(actividadChar);
+
+    env->ReleaseStringUTFChars(objetivo, objetivoChar);
+    env->ReleaseStringUTFChars(nivelActividad, actividadChar);
+
+    return (jboolean)actualizarPerfil(p);
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_ObjetivosActivity_registrarLog(
+        JNIEnv* env, jobject thiz,
+        jint usuarioId, jstring accion,
+        jstring detalle, jstring pantalla, jint exitoso) {
+
+    const char* accionChar   = env->GetStringUTFChars(accion, nullptr);
+    const char* detalleChar  = env->GetStringUTFChars(detalle, nullptr);
+    const char* pantallaChar = env->GetStringUTFChars(pantalla, nullptr);
+
+    Log l;
+    l.usuario_id = usuarioId;
+    l.accion     = std::string(accionChar);
+    l.detalle    = std::string(detalleChar);
+    l.pantalla   = std::string(pantallaChar);
+    l.fecha_hora = "2026-01-01 00:00:00";
+    l.exitoso    = exitoso;
+
+    env->ReleaseStringUTFChars(accion, accionChar);
+    env->ReleaseStringUTFChars(detalle, detalleChar);
+    env->ReleaseStringUTFChars(pantalla, pantallaChar);
+
+    return insertarLog(l);
+}
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_RegistroActivity_inicializarDB(
+        JNIEnv* env, jobject thiz, jstring ruta) {
+    const char* rutaChar = env->GetStringUTFChars(ruta, nullptr);
+    bool result = inicializarDB(std::string(rutaChar));
+    env->ReleaseStringUTFChars(ruta, rutaChar);
+    return result;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_PerfilActivity_inicializarDB(
+        JNIEnv* env, jobject thiz, jstring ruta) {
+    const char* rutaChar = env->GetStringUTFChars(ruta, nullptr);
+    bool result = inicializarDB(std::string(rutaChar));
+    env->ReleaseStringUTFChars(ruta, rutaChar);
+    return result;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_ObjetivosActivity_inicializarDB(
+        JNIEnv* env, jobject thiz, jstring ruta) {
+    const char* rutaChar = env->GetStringUTFChars(ruta, nullptr);
+    bool result = inicializarDB(std::string(rutaChar));
+    env->ReleaseStringUTFChars(ruta, rutaChar);
+    return result;
+}
+JNIEXPORT jobjectArray JNICALL
+Java_com_nutriapp_android_MainActivity_obtenerUltimaMedicion(
+        JNIEnv* env, jobject thiz, jint usuarioId) {
+
+    Medicion m = obtenerUltimaMedicion((int)usuarioId);
+
+    jobjectArray arr = env->NewObjectArray(4,
+                                           env->FindClass("java/lang/String"),
+                                           env->NewStringUTF(""));
+
+    if (m.id > 0) {
+        env->SetObjectArrayElement(arr, 0,
+                                   env->NewStringUTF(std::to_string((int)(m.imc * 10) / 10.0).substr(0,4).c_str()));
+        env->SetObjectArrayElement(arr, 1,
+                                   env->NewStringUTF(std::to_string(m.peso_lb).substr(0,5).c_str()));
+        env->SetObjectArrayElement(arr, 2,
+                                   env->NewStringUTF(std::to_string(m.porcentaje_grasa).substr(0,4).c_str()));
+        env->SetObjectArrayElement(arr, 3,
+                                   env->NewStringUTF(std::to_string((int)m.calorias_objetivo).c_str()));
+    } else {
+        env->SetObjectArrayElement(arr, 0, env->NewStringUTF("-1"));
+        env->SetObjectArrayElement(arr, 1, env->NewStringUTF("-1"));
+        env->SetObjectArrayElement(arr, 2, env->NewStringUTF("-1"));
+        env->SetObjectArrayElement(arr, 3, env->NewStringUTF("-1"));
+    }
+    return arr;
+}
+
+JNIEXPORT jfloat JNICALL
+Java_com_nutriapp_android_MainActivity_obtenerCaloriasDia(
+        JNIEnv* env, jobject thiz, jint usuarioId, jstring fecha) {
+    const char* fechaChar = env->GetStringUTFChars(fecha, nullptr);
+    float result = obtenerCaloriasDia((int)usuarioId, std::string(fechaChar));
+    env->ReleaseStringUTFChars(fecha, fechaChar);
+    return result;
+}
+
 } // extern "C"

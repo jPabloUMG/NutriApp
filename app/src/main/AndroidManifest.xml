@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -11,18 +15,37 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NutriApp">
+
+        <!-- LOGIN: pantalla de entrada principal -->
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- REGISTRO: crear nueva cuenta -->
+        <activity
+            android:name=".RegistroActivity"
+            android:exported="false" />
+
+        <!-- PERFIL: datos físicos del usuario -->
+        <activity
+            android:name=".PerfilActivity"
+            android:exported="false" />
+
+        <!-- OBJETIVOS: meta + nivel de actividad -->
+        <activity
+            android:name=".ObjetivosActivity"
+            android:exported="false" />
+
+        <!-- MAIN: dashboard principal -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>
