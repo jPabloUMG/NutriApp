@@ -58,7 +58,7 @@ ResultadoNutricional analizarNutricion(
     resultado.proteinasConsumidas = proteinasConsumidas;
     resultado.grasasConsumidas = grasasConsumidas;
 
-    // Alertas
+    // Alertas hola
     resultado.excesoCalorias  = resultado.diferenciaCalorias > 200;
     resultado.deficitCalorias = resultado.diferenciaCalorias < -200;
     resultado.excesoGrasas    = grasasConsumidas > 70;
