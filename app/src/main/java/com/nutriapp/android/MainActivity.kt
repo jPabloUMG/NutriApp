@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         tvCalorias.text = "${"%.0f".format(calorias)} kcal"
 
         btnRegistrarComida.setOnClickListener {
-            // TODO: RegistroComidaActivity
+            startActivity(Intent(this, RegistroComidaActivity::class.java))
         }
 
         btnReportes.setOnClickListener {

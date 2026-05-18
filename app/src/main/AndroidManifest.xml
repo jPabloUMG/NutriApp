@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -16,7 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NutriApp">
 
-        <!-- LOGIN: pantalla de entrada principal -->
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -26,25 +26,11 @@
             </intent-filter>
         </activity>
 
-        <!-- REGISTRO: crear nueva cuenta -->
-        <activity
-            android:name=".RegistroActivity"
-            android:exported="false" />
-
-        <!-- PERFIL: datos físicos del usuario -->
-        <activity
-            android:name=".PerfilActivity"
-            android:exported="false" />
-
-        <!-- OBJETIVOS: meta + nivel de actividad -->
-        <activity
-            android:name=".ObjetivosActivity"
-            android:exported="false" />
-
-        <!-- MAIN: dashboard principal -->
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+        <activity android:name=".RegistroActivity" android:exported="false" />
+        <activity android:name=".PerfilActivity" android:exported="false" />
+        <activity android:name=".ObjetivosActivity" android:exported="false" />
+        <activity android:name=".MainActivity" android:exported="false" />
+        <activity android:name=".RegistroComidaActivity" android:exported="false" />
 
     </application>
 

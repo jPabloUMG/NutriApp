@@ -378,5 +378,50 @@ Java_com_nutriapp_android_MainActivity_obtenerCaloriasDia(
     env->ReleaseStringUTFChars(fecha, fechaChar);
     return result;
 }
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_RegistroComidaActivity_inicializarDB(
+        JNIEnv* env, jobject thiz, jstring ruta) {
+    const char* rutaChar = env->GetStringUTFChars(ruta, nullptr);
+    bool result = inicializarDB(std::string(rutaChar));
+    env->ReleaseStringUTFChars(ruta, rutaChar);
+    return result;
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_RegistroComidaActivity_guardarRegistroComida(
+        JNIEnv* env, jobject thiz,
+        jint usuarioId, jstring nombre, jstring cantidad,
+        jfloat calorias, jfloat proteinas, jfloat carbohidratos,
+        jfloat grasas, jstring tiempoComida, jstring fuente) {
+
+    const char* nombreChar  = env->GetStringUTFChars(nombre, nullptr);
+    const char* cantidadChar = env->GetStringUTFChars(cantidad, nullptr);
+    const char* tiempoChar  = env->GetStringUTFChars(tiempoComida, nullptr);
+    const char* fuenteChar  = env->GetStringUTFChars(fuente, nullptr);
+
+    RegistroComida r;
+    r.usuario_id      = (int)usuarioId;
+    r.nombre_alimento = std::string(nombreChar);
+    r.cantidad        = std::string(cantidadChar);
+    r.calorias        = (float)calorias;
+    r.proteinas       = (float)proteinas;
+    r.carbohidratos   = (float)carbohidratos;
+    r.grasas          = (float)grasas;
+    r.azucares        = 0.0f;
+    r.tiempo_comida   = std::string(tiempoChar);
+    r.fuente          = std::string(fuenteChar);
+    r.imagen_path     = "";
+    r.confirmado      = 1;
+    r.fecha           = ""; // SQLite usará date('now')
+    r.hora            = ""; // SQLite usará time('now')
+
+    env->ReleaseStringUTFChars(nombre, nombreChar);
+    env->ReleaseStringUTFChars(cantidad, cantidadChar);
+    env->ReleaseStringUTFChars(tiempoComida, tiempoChar);
+    env->ReleaseStringUTFChars(fuente, fuenteChar);
+
+    return (jboolean)insertarRegistroComida(r);
+}
+
 
 } // extern "C"

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registrar comida"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="#212121"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- Imagen -->
+        <ImageView
+            android:id="@+id/ivFoto"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:background="#E0E0E0"
+            android:scaleType="centerCrop"
+            android:layout_marginBottom="12dp"
+            android:src="@android:drawable/ic_menu_camera"/>
+
+        <!-- Botones foto -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
+
+            <Button
+                android:id="@+id/btnCamara"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="8dp"
+                android:backgroundTint="#4CAF50"
+                android:text="📷 Cámara"
+                android:textColor="#FFFFFF"
+                android:stateListAnimator="@null"/>
+
+            <Button
+                android:id="@+id/btnGaleria"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:backgroundTint="#757575"
+                android:text="🖼 Galería"
+                android:textColor="#FFFFFF"
+                android:stateListAnimator="@null"/>
+
+        </LinearLayout>
+
+        <!-- Botón analizar -->
+        <Button
+            android:id="@+id/btnAnalizar"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="#1976D2"
+            android:text="✨ Analizar con IA"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:stateListAnimator="@null"/>
+
+        <!-- Progress -->
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="8dp"
+            android:visibility="gone"/>
+
+        <!-- Botón manual -->
+        <Button
+            android:id="@+id/btnManual"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#FFFFFF"
+            android:text="Ingresar manualmente"
+            android:textColor="#4CAF50"
+            android:stateListAnimator="@null"/>
+
+        <!-- Error -->
+        <TextView
+            android:id="@+id/tvError"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textColor="#F44336"
+            android:textSize="13sp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Formulario manual (oculto hasta analizar o botón manual) -->
+        <LinearLayout
+            android:id="@+id/layoutManual"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <!-- Tiempo de comida -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tiempo de comida"
+                android:textSize="14sp"
+                android:textColor="#757575"
+                android:layout_marginBottom="6dp"/>
+
+            <Spinner
+                android:id="@+id/spTiempo"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_input"
+                android:paddingStart="12dp"/>
+
+            <!-- Nombre -->
+            <EditText
+                android:id="@+id/etNombre"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_input"
+                android:hint="Nombre del alimento"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:inputType="textCapSentences"
+                android:textSize="15sp"
+                android:textColor="#212121"
+                android:textColorHint="#9E9E9E"/>
+
+            <!-- Cantidad -->
+            <EditText
+                android:id="@+id/etCantidad"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_input"
+                android:hint="Cantidad (ej: 1 plato, 200g)"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textSize="15sp"
+                android:textColor="#212121"
+                android:textColorHint="#9E9E9E"/>
+
+            <!-- Calorías -->
+            <EditText
+                android:id="@+id/etCalorias"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_input"
+                android:hint="Calorías (kcal)"
+                android:inputType="numberDecimal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textSize="15sp"
+                android:textColor="#212121"
+                android:textColorHint="#9E9E9E"/>
+
+            <!-- Proteínas -->
+            <EditText
+                android:id="@+id/etProteinas"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_input"
+                android:hint="Proteínas (g)"
+                android:inputType="numberDecimal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textSize="15sp"
+                android:textColor="#212121"
+                android:textColorHint="#9E9E9E"/>
+
+            <!-- Carbohidratos -->
+            <EditText
+                android:id="@+id/etCarbos"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_input"
+                android:hint="Carbohidratos (g)"
+                android:inputType="numberDecimal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textSize="15sp"
+                android:textColor="#212121"
+                android:textColorHint="#9E9E9E"/>
+
+            <!-- Grasas -->
+            <EditText
+                android:id="@+id/etGrasas"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_input"
+                android:hint="Grasas (g)"
+                android:inputType="numberDecimal"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textSize="15sp"
+                android:textColor="#212121"
+                android:textColorHint="#9E9E9E"/>
+
+            <!-- Botón guardar -->
+            <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginBottom="32dp"
+                android:backgroundTint="#4CAF50"
+                android:text="Guardar comida"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:stateListAnimator="@null"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
