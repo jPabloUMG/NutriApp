@@ -558,24 +558,22 @@ bool insertarRegistroComida(const RegistroComida& r) {
             "(usuario_id, fecha, hora, tiempo_comida, nombre_alimento, cantidad, "
             "calorias, proteinas, carbohidratos, grasas, azucares, "
             "imagen_path, fuente, confirmado) "
-            "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+            "VALUES (?,date('now','localtime'),time('now','localtime'),?,?,?,?,?,?,?,?,?,?,?);";
 
     sqlite3_stmt* stmt;
     sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
     sqlite3_bind_int   (stmt,  1, r.usuario_id);
-    sqlite3_bind_text  (stmt,  2, r.fecha.c_str(),           -1, SQLITE_STATIC);
-    sqlite3_bind_text  (stmt,  3, r.hora.c_str(),            -1, SQLITE_STATIC);
-    sqlite3_bind_text  (stmt,  4, r.tiempo_comida.c_str(),   -1, SQLITE_STATIC);
-    sqlite3_bind_text  (stmt,  5, r.nombre_alimento.c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text  (stmt,  6, r.cantidad.c_str(),        -1, SQLITE_STATIC);
-    sqlite3_bind_double(stmt,  7, r.calorias);
-    sqlite3_bind_double(stmt,  8, r.proteinas);
-    sqlite3_bind_double(stmt,  9, r.carbohidratos);
-    sqlite3_bind_double(stmt, 10, r.grasas);
-    sqlite3_bind_double(stmt, 11, r.azucares);
-    sqlite3_bind_text  (stmt, 12, r.imagen_path.c_str(),     -1, SQLITE_STATIC);
-    sqlite3_bind_text  (stmt, 13, r.fuente.c_str(),          -1, SQLITE_STATIC);
-    sqlite3_bind_int   (stmt, 14, r.confirmado);
+    sqlite3_bind_text  (stmt,  2, r.tiempo_comida.c_str(),   -1, SQLITE_STATIC);
+    sqlite3_bind_text  (stmt,  3, r.nombre_alimento.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text  (stmt,  4, r.cantidad.c_str(),        -1, SQLITE_STATIC);
+    sqlite3_bind_double(stmt,  5, r.calorias);
+    sqlite3_bind_double(stmt,  6, r.proteinas);
+    sqlite3_bind_double(stmt,  7, r.carbohidratos);
+    sqlite3_bind_double(stmt,  8, r.grasas);
+    sqlite3_bind_double(stmt,  9, r.azucares);
+    sqlite3_bind_text  (stmt, 10, r.imagen_path.c_str(),     -1, SQLITE_STATIC);
+    sqlite3_bind_text  (stmt, 11, r.fuente.c_str(),          -1, SQLITE_STATIC);
+    sqlite3_bind_int   (stmt, 12, r.confirmado);
 
     int result = sqlite3_step(stmt);
     sqlite3_finalize(stmt);

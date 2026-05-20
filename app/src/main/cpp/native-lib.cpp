@@ -37,7 +37,6 @@ Java_com_nutriapp_android_MainActivity_insertarUsuario(
     u.actividad    = env->GetStringUTFChars(actividad, nullptr);
     u.ocupacion    = env->GetStringUTFChars(ocupacion, nullptr);
     u.meta         = env->GetStringUTFChars(meta, nullptr);
-
     return insertarUsuario(u);
 }
 
@@ -87,9 +86,60 @@ Java_com_nutriapp_android_MainActivity_generarRecomendaciones(
 
     ResultadoNutricional resultado = analizarNutricion(
             u, calorias, carbs, proteinas, grasas, azucares);
-
     std::string rec = generarRecomendaciones(resultado);
     return env->NewStringUTF(rec.c_str());
+}
+
+// Obtener perfil (genero, nombre)
+JNIEXPORT jobjectArray JNICALL
+Java_com_nutriapp_android_MainActivity_obtenerPerfilUsuario(
+        JNIEnv* env, jobject thiz, jint usuarioId) {
+
+    Perfil p = obtenerPerfil((int)usuarioId);
+    jobjectArray arr = env->NewObjectArray(2,
+                                           env->FindClass("java/lang/String"),
+                                           env->NewStringUTF(""));
+    env->SetObjectArrayElement(arr, 0, env->NewStringUTF(p.genero.c_str()));
+    env->SetObjectArrayElement(arr, 1, env->NewStringUTF(p.nombre.c_str()));
+    return arr;
+}
+
+// Obtener última medición extendida (14 campos)
+JNIEXPORT jobjectArray JNICALL
+Java_com_nutriapp_android_MainActivity_obtenerUltimaMedicion(
+        JNIEnv* env, jobject thiz, jint usuarioId) {
+
+    Medicion m = obtenerUltimaMedicion((int)usuarioId);
+    jobjectArray arr = env->NewObjectArray(14,
+                                           env->FindClass("java/lang/String"),
+                                           env->NewStringUTF("-1"));
+
+    if (m.id > 0) {
+        env->SetObjectArrayElement(arr, 0,  env->NewStringUTF(std::to_string(m.imc).substr(0,5).c_str()));
+        env->SetObjectArrayElement(arr, 1,  env->NewStringUTF(std::to_string(m.peso_lb).substr(0,6).c_str()));
+        env->SetObjectArrayElement(arr, 2,  env->NewStringUTF(std::to_string(m.porcentaje_grasa).substr(0,5).c_str()));
+        env->SetObjectArrayElement(arr, 3,  env->NewStringUTF(std::to_string(m.calorias_objetivo).substr(0,7).c_str()));
+        env->SetObjectArrayElement(arr, 4,  env->NewStringUTF(std::to_string(m.masa_magra_lb).substr(0,6).c_str()));
+        env->SetObjectArrayElement(arr, 5,  env->NewStringUTF(std::to_string(m.masa_muscular_lb).substr(0,6).c_str()));
+        env->SetObjectArrayElement(arr, 6,  env->NewStringUTF(std::to_string(m.masa_grasa_lb).substr(0,6).c_str()));
+        env->SetObjectArrayElement(arr, 7,  env->NewStringUTF(std::to_string(m.masa_osea_lb).substr(0,6).c_str()));
+        env->SetObjectArrayElement(arr, 8,  env->NewStringUTF(std::to_string(m.agua_corporal_pct).substr(0,5).c_str()));
+        env->SetObjectArrayElement(arr, 9,  env->NewStringUTF(std::to_string(m.grasa_visceral).substr(0,5).c_str()));
+        env->SetObjectArrayElement(arr, 10, env->NewStringUTF(std::to_string(m.edad_metabolica).c_str()));
+        env->SetObjectArrayElement(arr, 11, env->NewStringUTF(std::to_string(m.puntuacion_salud).substr(0,5).c_str()));
+        env->SetObjectArrayElement(arr, 12, env->NewStringUTF(m.tipo_cuerpo.c_str()));
+        env->SetObjectArrayElement(arr, 13, env->NewStringUTF(std::to_string(m.tmb).substr(0,7).c_str()));
+    }
+    return arr;
+}
+
+JNIEXPORT jfloat JNICALL
+Java_com_nutriapp_android_MainActivity_obtenerCaloriasDia(
+        JNIEnv* env, jobject thiz, jint usuarioId, jstring fecha) {
+    const char* fechaChar = env->GetStringUTFChars(fecha, nullptr);
+    float result = obtenerCaloriasDia((int)usuarioId, std::string(fechaChar));
+    env->ReleaseStringUTFChars(fecha, fechaChar);
+    return result;
 }
 
 // ══════════════════════════════════════════════════════════════════
@@ -110,7 +160,7 @@ Java_com_nutriapp_android_LoginActivity_verificarLogin(
         JNIEnv* env, jobject thiz,
         jstring correo, jstring contrasena) {
 
-    const char* correoChar    = env->GetStringUTFChars(correo, nullptr);
+    const char* correoChar     = env->GetStringUTFChars(correo, nullptr);
     const char* contrasenaChar = env->GetStringUTFChars(contrasena, nullptr);
 
     Usuario resultado;
@@ -166,7 +216,6 @@ Java_com_nutriapp_android_LoginActivity_registrarLog(
     env->ReleaseStringUTFChars(accion, accionChar);
     env->ReleaseStringUTFChars(detalle, detalleChar);
     env->ReleaseStringUTFChars(pantalla, pantallaChar);
-
     return insertarLog(l);
 }
 
@@ -174,12 +223,21 @@ Java_com_nutriapp_android_LoginActivity_registrarLog(
 //  REGISTRO ACTIVITY
 // ══════════════════════════════════════════════════════════════════
 
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_RegistroActivity_inicializarDB(
+        JNIEnv* env, jobject thiz, jstring ruta) {
+    const char* rutaChar = env->GetStringUTFChars(ruta, nullptr);
+    bool result = inicializarDB(std::string(rutaChar));
+    env->ReleaseStringUTFChars(ruta, rutaChar);
+    return result;
+}
+
 JNIEXPORT jint JNICALL
 Java_com_nutriapp_android_RegistroActivity_registrarUsuario(
         JNIEnv* env, jobject thiz,
         jstring correo, jstring contrasena) {
 
-    const char* correoChar    = env->GetStringUTFChars(correo, nullptr);
+    const char* correoChar     = env->GetStringUTFChars(correo, nullptr);
     const char* contrasenaChar = env->GetStringUTFChars(contrasena, nullptr);
 
     int nuevoId = registrarUsuario(
@@ -212,13 +270,21 @@ Java_com_nutriapp_android_RegistroActivity_registrarLog(
     env->ReleaseStringUTFChars(accion, accionChar);
     env->ReleaseStringUTFChars(detalle, detalleChar);
     env->ReleaseStringUTFChars(pantalla, pantallaChar);
-
     return insertarLog(l);
 }
 
 // ══════════════════════════════════════════════════════════════════
 //  PERFIL ACTIVITY
 // ══════════════════════════════════════════════════════════════════
+
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_PerfilActivity_inicializarDB(
+        JNIEnv* env, jobject thiz, jstring ruta) {
+    const char* rutaChar = env->GetStringUTFChars(ruta, nullptr);
+    bool result = inicializarDB(std::string(rutaChar));
+    env->ReleaseStringUTFChars(ruta, rutaChar);
+    return result;
+}
 
 JNIEXPORT jboolean JNICALL
 Java_com_nutriapp_android_PerfilActivity_guardarPerfil(
@@ -241,7 +307,6 @@ Java_com_nutriapp_android_PerfilActivity_guardarPerfil(
 
     env->ReleaseStringUTFChars(nombre, nombreChar);
     env->ReleaseStringUTFChars(genero, generoChar);
-
     return (jboolean)guardarPerfil(p, (float)peso, (float)grasa);
 }
 
@@ -266,13 +331,21 @@ Java_com_nutriapp_android_PerfilActivity_registrarLog(
     env->ReleaseStringUTFChars(accion, accionChar);
     env->ReleaseStringUTFChars(detalle, detalleChar);
     env->ReleaseStringUTFChars(pantalla, pantallaChar);
-
     return insertarLog(l);
 }
 
 // ══════════════════════════════════════════════════════════════════
 //  OBJETIVOS ACTIVITY
 // ══════════════════════════════════════════════════════════════════
+
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_ObjetivosActivity_inicializarDB(
+        JNIEnv* env, jobject thiz, jstring ruta) {
+    const char* rutaChar = env->GetStringUTFChars(ruta, nullptr);
+    bool result = inicializarDB(std::string(rutaChar));
+    env->ReleaseStringUTFChars(ruta, rutaChar);
+    return result;
+}
 
 JNIEXPORT jboolean JNICALL
 Java_com_nutriapp_android_ObjetivosActivity_guardarObjetivo(
@@ -288,7 +361,6 @@ Java_com_nutriapp_android_ObjetivosActivity_guardarObjetivo(
 
     env->ReleaseStringUTFChars(objetivo, objetivoChar);
     env->ReleaseStringUTFChars(nivelActividad, actividadChar);
-
     return (jboolean)actualizarPerfil(p);
 }
 
@@ -313,71 +385,13 @@ Java_com_nutriapp_android_ObjetivosActivity_registrarLog(
     env->ReleaseStringUTFChars(accion, accionChar);
     env->ReleaseStringUTFChars(detalle, detalleChar);
     env->ReleaseStringUTFChars(pantalla, pantallaChar);
-
     return insertarLog(l);
 }
-JNIEXPORT jboolean JNICALL
-Java_com_nutriapp_android_RegistroActivity_inicializarDB(
-        JNIEnv* env, jobject thiz, jstring ruta) {
-    const char* rutaChar = env->GetStringUTFChars(ruta, nullptr);
-    bool result = inicializarDB(std::string(rutaChar));
-    env->ReleaseStringUTFChars(ruta, rutaChar);
-    return result;
-}
 
-JNIEXPORT jboolean JNICALL
-Java_com_nutriapp_android_PerfilActivity_inicializarDB(
-        JNIEnv* env, jobject thiz, jstring ruta) {
-    const char* rutaChar = env->GetStringUTFChars(ruta, nullptr);
-    bool result = inicializarDB(std::string(rutaChar));
-    env->ReleaseStringUTFChars(ruta, rutaChar);
-    return result;
-}
+// ══════════════════════════════════════════════════════════════════
+//  REGISTRO COMIDA ACTIVITY
+// ══════════════════════════════════════════════════════════════════
 
-JNIEXPORT jboolean JNICALL
-Java_com_nutriapp_android_ObjetivosActivity_inicializarDB(
-        JNIEnv* env, jobject thiz, jstring ruta) {
-    const char* rutaChar = env->GetStringUTFChars(ruta, nullptr);
-    bool result = inicializarDB(std::string(rutaChar));
-    env->ReleaseStringUTFChars(ruta, rutaChar);
-    return result;
-}
-JNIEXPORT jobjectArray JNICALL
-Java_com_nutriapp_android_MainActivity_obtenerUltimaMedicion(
-        JNIEnv* env, jobject thiz, jint usuarioId) {
-
-    Medicion m = obtenerUltimaMedicion((int)usuarioId);
-
-    jobjectArray arr = env->NewObjectArray(4,
-                                           env->FindClass("java/lang/String"),
-                                           env->NewStringUTF(""));
-
-    if (m.id > 0) {
-        env->SetObjectArrayElement(arr, 0,
-                                   env->NewStringUTF(std::to_string((int)(m.imc * 10) / 10.0).substr(0,4).c_str()));
-        env->SetObjectArrayElement(arr, 1,
-                                   env->NewStringUTF(std::to_string(m.peso_lb).substr(0,5).c_str()));
-        env->SetObjectArrayElement(arr, 2,
-                                   env->NewStringUTF(std::to_string(m.porcentaje_grasa).substr(0,4).c_str()));
-        env->SetObjectArrayElement(arr, 3,
-                                   env->NewStringUTF(std::to_string((int)m.calorias_objetivo).c_str()));
-    } else {
-        env->SetObjectArrayElement(arr, 0, env->NewStringUTF("-1"));
-        env->SetObjectArrayElement(arr, 1, env->NewStringUTF("-1"));
-        env->SetObjectArrayElement(arr, 2, env->NewStringUTF("-1"));
-        env->SetObjectArrayElement(arr, 3, env->NewStringUTF("-1"));
-    }
-    return arr;
-}
-
-JNIEXPORT jfloat JNICALL
-Java_com_nutriapp_android_MainActivity_obtenerCaloriasDia(
-        JNIEnv* env, jobject thiz, jint usuarioId, jstring fecha) {
-    const char* fechaChar = env->GetStringUTFChars(fecha, nullptr);
-    float result = obtenerCaloriasDia((int)usuarioId, std::string(fechaChar));
-    env->ReleaseStringUTFChars(fecha, fechaChar);
-    return result;
-}
 JNIEXPORT jboolean JNICALL
 Java_com_nutriapp_android_RegistroComidaActivity_inicializarDB(
         JNIEnv* env, jobject thiz, jstring ruta) {
@@ -394,10 +408,10 @@ Java_com_nutriapp_android_RegistroComidaActivity_guardarRegistroComida(
         jfloat calorias, jfloat proteinas, jfloat carbohidratos,
         jfloat grasas, jstring tiempoComida, jstring fuente) {
 
-    const char* nombreChar  = env->GetStringUTFChars(nombre, nullptr);
+    const char* nombreChar   = env->GetStringUTFChars(nombre, nullptr);
     const char* cantidadChar = env->GetStringUTFChars(cantidad, nullptr);
-    const char* tiempoChar  = env->GetStringUTFChars(tiempoComida, nullptr);
-    const char* fuenteChar  = env->GetStringUTFChars(fuente, nullptr);
+    const char* tiempoChar   = env->GetStringUTFChars(tiempoComida, nullptr);
+    const char* fuenteChar   = env->GetStringUTFChars(fuente, nullptr);
 
     RegistroComida r;
     r.usuario_id      = (int)usuarioId;
@@ -412,16 +426,14 @@ Java_com_nutriapp_android_RegistroComidaActivity_guardarRegistroComida(
     r.fuente          = std::string(fuenteChar);
     r.imagen_path     = "";
     r.confirmado      = 1;
-    r.fecha           = ""; // SQLite usará date('now')
-    r.hora            = ""; // SQLite usará time('now')
+    r.fecha           = "";
+    r.hora            = "";
 
     env->ReleaseStringUTFChars(nombre, nombreChar);
     env->ReleaseStringUTFChars(cantidad, cantidadChar);
     env->ReleaseStringUTFChars(tiempoComida, tiempoChar);
     env->ReleaseStringUTFChars(fuente, fuenteChar);
-
     return (jboolean)insertarRegistroComida(r);
 }
-
 
 } // extern "C"

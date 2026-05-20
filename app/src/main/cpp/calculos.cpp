@@ -4,8 +4,9 @@
 
 float calcularIMC(float peso, float altura) {
     if (altura <= 0) return 0;
+    float pesoKg = peso * 0.453592f;      // ← convertir lb a kg
     float alturaMetros = altura / 100.0f;
-    return peso / (alturaMetros * alturaMetros);
+    return pesoKg / (alturaMetros * alturaMetros);
 }
 
 std::string categoriaIMC(float imc) {
@@ -16,11 +17,12 @@ std::string categoriaIMC(float imc) {
 }
 
 float calcularTMB(float peso, float altura, int edad, std::string genero) {
-    // Fórmula de Harris-Benedict
-    if (genero == "masculino" || genero == "hombre") {
-        return 88.362f + (13.397f * peso) + (4.799f * altura) - (5.677f * edad);
+    float pesoKg = peso * 0.453592f;      // ← convertir lb a kg
+    // Comparar sin distinción de mayúsculas
+    if (genero == "Masculino" || genero == "masculino" || genero == "hombre") {
+        return 88.362f + (13.397f * pesoKg) + (4.799f * altura) - (5.677f * edad);
     } else {
-        return 447.593f + (9.247f * peso) + (3.098f * altura) - (4.330f * edad);
+        return 447.593f + (9.247f * pesoKg) + (3.098f * altura) - (4.330f * edad);
     }
 }
 
