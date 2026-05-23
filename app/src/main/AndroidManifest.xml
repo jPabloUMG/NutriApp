@@ -31,7 +31,7 @@
         <activity android:name=".ObjetivosActivity" android:exported="false" />
         <activity android:name=".MainActivity" android:exported="false" />
         <activity android:name=".RegistroComidaActivity" android:exported="false" />
-
+        <activity android:name=".AdminActivity"/>
     </application>
 
 </manifest>

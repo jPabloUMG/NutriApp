@@ -141,21 +141,7 @@ void cerrarDB() {
 //  ROLES
 // ══════════════════════════════════════════════════════════════════
 
-bool inicializarRoles() {
-    const char* sql =
-            "INSERT OR IGNORE INTO roles (id, nombre, descripcion) VALUES "
-            "(1, 'superadmin', 'Administrador con acceso total'),"
-            "(2, 'usuario', 'Usuario regular de la app');";
 
-    char* errMsg = nullptr;
-    int result = sqlite3_exec(db, sql, nullptr, nullptr, &errMsg);
-    if (result != SQLITE_OK) {
-        LOGE("Error insertando roles: %s", errMsg);
-        sqlite3_free(errMsg);
-        return false;
-    }
-    return true;
-}
 
 // ══════════════════════════════════════════════════════════════════
 //  USUARIOS
@@ -177,6 +163,7 @@ bool insertarUsuario(const Usuario& u) {
     sqlite3_finalize(stmt);
     return result == SQLITE_DONE;
 }
+
 
 int registrarUsuario(const std::string& correo, const std::string& contrasena) {
     const char* sqlCheck = "SELECT id FROM usuarios WHERE correo = ?;";
@@ -205,6 +192,38 @@ int registrarUsuario(const std::string& correo, const std::string& contrasena) {
         return (int)sqlite3_last_insert_rowid(db);
     return 0;
 }
+
+bool inicializarRoles() {
+    const char* sql =
+            "INSERT OR IGNORE INTO roles (id, nombre, descripcion) VALUES "
+            "(1, 'superadmin', 'Administrador con acceso total'),"
+            "(2, 'usuario', 'Usuario regular de la app');";
+
+    char* errMsg = nullptr;
+    int result = sqlite3_exec(db, sql, nullptr, nullptr, &errMsg);
+    if (result != SQLITE_OK) {
+        LOGE("Error insertando roles: %s", errMsg);
+        sqlite3_free(errMsg);
+        return false;
+    }
+
+    // ── SEMBRAR SUPERADMIN ────────────────────────────────────────
+    const char* sqlAdmin =
+            "INSERT OR IGNORE INTO usuarios "
+            "(id, correo, contrasena, rol_id, activo, fecha_registro) "
+            "VALUES (1, 'admin@nutriapp.com', 'admin123', 1, 1, datetime('now'));";
+
+    result = sqlite3_exec(db, sqlAdmin, nullptr, nullptr, &errMsg);
+    if (result != SQLITE_OK) {
+        LOGE("Error insertando admin: %s", errMsg);
+        sqlite3_free(errMsg);
+        return false;
+    }
+    // ─────────────────────────────────────────────────────────────
+
+    return true;
+}
+
 
 bool verificarLogin(const std::string& correo,
                     const std::string& contrasena,
@@ -244,6 +263,15 @@ bool actualizarUltimoAcceso(int usuario_id, const std::string& fecha) {
 
 bool desactivarUsuario(int usuario_id) {
     const char* sql = "UPDATE usuarios SET activo = 0 WHERE id = ?;";
+    sqlite3_stmt* stmt;
+    sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
+    sqlite3_bind_int(stmt, 1, usuario_id);
+    int result = sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+    return result == SQLITE_DONE;
+}
+bool activarUsuario(int usuario_id) {
+    const char* sql = "UPDATE usuarios SET activo = 1 WHERE id = ?;";
     sqlite3_stmt* stmt;
     sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
     sqlite3_bind_int(stmt, 1, usuario_id);
@@ -833,4 +861,5 @@ std::vector<Reporte> obtenerTodosReportes() {
     }
     sqlite3_finalize(stmt);
     return lista;
+
 }
