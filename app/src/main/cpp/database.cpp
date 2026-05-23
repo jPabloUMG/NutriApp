@@ -577,9 +577,26 @@ bool insertarRegistroComida(const RegistroComida& r) {
 
     int result = sqlite3_step(stmt);
     sqlite3_finalize(stmt);
+
+    // ── LOG TEMPORAL ──────────────────────────────────────────────
+    LOGE("insertarRegistroComida resultado: %s", result == SQLITE_DONE ? "OK" : "FALLO");
+    const char* sqlCheck =
+            "SELECT fecha, hora, calorias FROM registros_comida ORDER BY id DESC LIMIT 1;";
+    sqlite3_stmt* stmtCheck;
+    sqlite3_prepare_v2(db, sqlCheck, -1, &stmtCheck, nullptr);
+    if (sqlite3_step(stmtCheck) == SQLITE_ROW) {
+        LOGE("ULTIMO REGISTRO - fecha:'%s'  hora:'%s'  calorias:%.1f",
+             sqlite3_column_text(stmtCheck, 0),
+             sqlite3_column_text(stmtCheck, 1),
+             sqlite3_column_double(stmtCheck, 2));
+    } else {
+        LOGE("ULTIMO REGISTRO - tabla vacia o sin resultado");
+    }
+    sqlite3_finalize(stmtCheck);
+    // ── FIN LOG ───────────────────────────────────────────────────
+
     return result == SQLITE_DONE;
 }
-
 std::vector<RegistroComida> obtenerRegistrosComida(int usuario_id,
                                                    const std::string& fecha) {
     std::vector<RegistroComida> lista;
