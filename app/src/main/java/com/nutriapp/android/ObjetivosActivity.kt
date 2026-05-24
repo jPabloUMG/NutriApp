@@ -1,6 +1,7 @@
 package com.nutriapp.android
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -11,6 +12,14 @@ class ObjetivosActivity : AppCompatActivity() {
 
     private var objetivoSeleccionado: String = ""
     private var nivelActividad: String = "Sedentario"
+
+    // --- VARIABLES PARA CONTROLAR EL DISEÑO DE SELECCIÓN ---
+    private var cardObjetivoSeleccionado: CardView? = null
+    private var cardActividadSeleccionada: CardView? = null
+
+    // Usamos el verde claro para la selección y blanco para el estado normal
+    private val colorSeleccionado = Color.parseColor("#E8F5E9")
+    private val colorOriginalFondo = Color.parseColor("#FFFFFF")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +58,14 @@ class ObjetivosActivity : AppCompatActivity() {
         cardsObjetivo.forEachIndexed { i, card ->
             card.setOnClickListener {
                 objetivoSeleccionado = objetivos[i]
-                cardsObjetivo.forEach { it.cardElevation = 4f }
-                card.cardElevation = 12f
+
+                // 1. Apaga la tarjeta anterior de objetivos
+                cardObjetivoSeleccionado?.let { resaltarTarjeta(it, false) }
+                // 2. Enciende la nueva tarjeta presionada
+                resaltarTarjeta(card, true)
+                // 3. Actualiza la referencia actual
+                cardObjetivoSeleccionado = card
+
                 tvError.text = ""
             }
         }
@@ -62,8 +77,13 @@ class ObjetivosActivity : AppCompatActivity() {
         cardsActividad.forEachIndexed { i, card ->
             card.setOnClickListener {
                 nivelActividad = niveles[i]
-                cardsActividad.forEach { it.cardElevation = 4f }
-                card.cardElevation = 12f
+
+                // 1. Apaga la tarjeta anterior de actividad
+                cardActividadSeleccionada?.let { resaltarTarjeta(it, false) }
+                // 2. Enciende la nueva tarjeta presionada
+                resaltarTarjeta(card, true)
+                // 3. Actualiza la referencia actual
+                cardActividadSeleccionada = card
             }
         }
 
@@ -84,6 +104,17 @@ class ObjetivosActivity : AppCompatActivity() {
             } else {
                 tvError.text = "Error al guardar el objetivo"
             }
+        }
+    }
+
+    // --- FUNCIÓN CORREGIDA SIN PROPIEDADES PROBLEMÁTICAS ---
+    private fun resaltarTarjeta(card: CardView, seleccionar: Boolean) {
+        if (seleccionar) {
+            card.setCardBackgroundColor(colorSeleccionado)
+            card.cardElevation = 10f // Se levanta para denotar selección física
+        } else {
+            card.setCardBackgroundColor(colorOriginalFondo)
+            card.cardElevation = 4f  // Regresa a su elevación sutil por defecto
         }
     }
 

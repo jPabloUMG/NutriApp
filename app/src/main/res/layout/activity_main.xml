@@ -1,947 +1,163 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#F0F4F0">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <!-- HEADER -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvSaludo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="¡Bienvenido!"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:textColor="#1B5E20"/>
-
-                <TextView
-                    android:id="@+id/tvFecha"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hoy"
-                    android:textSize="13sp"
-                    android:textColor="#757575"/>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="match_parent" android:background="#F1F8F1">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+        <!--  HEADER  -->
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="16dp" android:layout_marginBottom="16dp">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:id="@+id/tvSaludo" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="¡Bienvenido!" android:textSize="22sp" android:textStyle="bold" android:textColor="#1B4332"/>
+                <TextView android:id="@+id/tvFecha" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Hoy" android:textSize="13sp" android:textColor="#52796F"/>
             </LinearLayout>
-
-            <Button
-                android:id="@+id/btnRegistrarComida"
-                android:layout_width="wrap_content"
-                android:layout_height="40dp"
-                android:backgroundTint="#4CAF50"
-                android:text="+ Comida"
-                android:textColor="#FFFFFF"
-                android:textSize="13sp"
-                android:stateListAnimator="@null"/>
+            <Button android:id="@+id/btnRegistrarComida" android:layout_width="wrap_content" android:layout_height="40dp" android:backgroundTint="#2D6A4F" android:text="+ Comida" android:textColor="#FFFFFF" android:textSize="13sp" android:stateListAnimator="@null"/>
         </LinearLayout>
-
-        <!-- CALORÍAS DEL DÍA -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#2E7D32">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Calorías de hoy"
-                    android:textSize="13sp"
-                    android:textColor="#A5D6A7"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginTop="4dp">
-
-                    <TextView
-                        android:id="@+id/tvCalorias"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="0"
-                        android:textSize="42sp"
-                        android:textStyle="bold"
-                        android:textColor="#FFFFFF"/>
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:gravity="end">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="kcal consumidas"
-                            android:textSize="12sp"
-                            android:textColor="#A5D6A7"/>
-
-                        <TextView
-                            android:id="@+id/tvCaloriasObjetivo"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Objetivo: -- kcal"
-                            android:textSize="13sp"
-                            android:textStyle="bold"
-                            android:textColor="#FFFFFF"/>
+        <!--  CALORÍAS DEL DÍA  -->
+        <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="12dp" app:cardCornerRadius="16dp" app:cardElevation="4dp" app:cardBackgroundColor="#1B4332">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="20dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Calorías de hoy" android:textSize="13sp" android:textColor="#95D5B2"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginTop="4dp">
+                    <TextView android:id="@+id/tvCalorias" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="0" android:textSize="42sp" android:textStyle="bold" android:textColor="#FFFFFF"/>
+                    <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="end">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="kcal consumidas" android:textSize="12sp" android:textColor="#95D5B2"/>
+                        <TextView android:id="@+id/tvCaloriasObjetivo" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Objetivo: -- kcal" android:textSize="13sp" android:textStyle="bold" android:textColor="#D8F3DC"/>
                     </LinearLayout>
                 </LinearLayout>
-
-                <ProgressBar
-                    android:id="@+id/progressCalorias"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="8dp"
-                    android:layout_marginTop="12dp"
-                    android:progressBackgroundTint="#1B5E20"
-                    android:progressTint="#A5D6A7"
-                    android:max="100"
-                    android:progress="0"/>
-
-                <TextView
-                    android:id="@+id/tvCaloriasRestantes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="-- kcal restantes"
-                    android:textSize="12sp"
-                    android:textColor="#A5D6A7"/>
-
+                <ProgressBar android:id="@+id/progressCalorias" style="@style/Widget.AppCompat.ProgressBar.Horizontal" android:layout_width="match_parent" android:layout_height="8dp" android:layout_marginTop="12dp" android:progressBackgroundTint="#0D2B1F" android:progressTint="#74C69D" android:max="100" android:progress="0"/>
+                <TextView android:id="@+id/tvCaloriasRestantes" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:text="-- kcal restantes" android:textSize="12sp" android:textColor="#95D5B2"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- IMC - COMPARACIÓN OMS -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="3dp"
-            app:cardBackgroundColor="#FFFFFF">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="12dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="📊 IMC — Tabla OMS"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#212121"/>
-
-                    <TextView
-                        android:id="@+id/tvIMCValor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="--"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        android:textColor="#4CAF50"/>
+        <!--  IMC - COMPARACIÓN OMS  -->
+        <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="12dp" app:cardCornerRadius="16dp" app:cardElevation="3dp" app:cardBackgroundColor="#FFFFFF">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="12dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="📊 IMC — Tabla OMS" android:textSize="15sp" android:textStyle="bold" android:textColor="#1B4332"/>
+                    <TextView android:id="@+id/tvIMCValor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textSize="22sp" android:textStyle="bold" android:textColor="#2D6A4F"/>
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tvIMCCategoria"
-                    android:layout_width="match_parent"
-                    android:layout_height="36dp"
-                    android:gravity="center"
-                    android:text="--"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:background="#4CAF50"
-                    android:layout_marginBottom="12dp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="4dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="32dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="&lt;18.5"
-                        android:textSize="11sp"
-                        android:textColor="#FFFFFF"
-                        android:background="#2196F3"
-                        android:layout_marginEnd="2dp"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="32dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="18.5–24.9"
-                        android:textSize="11sp"
-                        android:textColor="#FFFFFF"
-                        android:background="#4CAF50"
-                        android:layout_marginEnd="2dp"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="32dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="25–29.9"
-                        android:textSize="11sp"
-                        android:textColor="#FFFFFF"
-                        android:background="#FF9800"
-                        android:layout_marginEnd="2dp"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="32dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="≥30"
-                        android:textSize="11sp"
-                        android:textColor="#FFFFFF"
-                        android:background="#F44336"/>
+                <TextView android:id="@+id/tvIMCCategoria" android:layout_width="match_parent" android:layout_height="36dp" android:gravity="center" android:text="--" android:textSize="14sp" android:textStyle="bold" android:textColor="#FFFFFF" android:background="#2D6A4F" android:layout_marginBottom="12dp"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="4dp">
+                    <TextView android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:gravity="center" android:text="&lt;18.5" android:textSize="11sp" android:textColor="#FFFFFF" android:background="#52B788" android:layout_marginEnd="2dp"/>
+                    <TextView android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:gravity="center" android:text="18.5–24.9" android:textSize="11sp" android:textColor="#FFFFFF" android:background="#2D6A4F" android:layout_marginEnd="2dp"/>
+                    <TextView android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:gravity="center" android:text="25–29.9" android:textSize="11sp" android:textColor="#FFFFFF" android:background="#74C69D" android:layout_marginEnd="2dp"/>
+                    <TextView android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:gravity="center" android:text="≥30" android:textSize="11sp" android:textColor="#FFFFFF" android:background="#1B4332"/>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Bajo peso"
-                        android:textSize="10sp"
-                        android:textColor="#2196F3"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Normal"
-                        android:textSize="10sp"
-                        android:textColor="#4CAF50"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Sobrepeso"
-                        android:textSize="10sp"
-                        android:textColor="#FF9800"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Obesidad"
-                        android:textSize="10sp"
-                        android:textColor="#F44336"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Bajo peso" android:textSize="10sp" android:textColor="#52B788"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Normal" android:textSize="10sp" android:textColor="#2D6A4F"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Sobrepeso" android:textSize="10sp" android:textColor="#74C69D"/>
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="Obesidad" android:textSize="10sp" android:textColor="#1B4332"/>
                 </LinearLayout>
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- % GRASA CORPORAL -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="3dp"
-            app:cardBackgroundColor="#FFFFFF">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="12dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="🔥 % Grasa Corporal"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#212121"/>
-
-                    <TextView
-                        android:id="@+id/tvGrasaValor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-- %"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        android:textColor="#FF5722"/>
+        <!--  % GRASA CORPORAL  -->
+        <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="12dp" app:cardCornerRadius="16dp" app:cardElevation="3dp" app:cardBackgroundColor="#FFFFFF">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="12dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="🔥 % Grasa Corporal" android:textSize="15sp" android:textStyle="bold" android:textColor="#1B4332"/>
+                    <TextView android:id="@+id/tvGrasaValor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-- %" android:textSize="22sp" android:textStyle="bold" android:textColor="#40916C"/>
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tvGrasaCategoria"
-                    android:layout_width="match_parent"
-                    android:layout_height="36dp"
-                    android:gravity="center"
-                    android:text="--"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="#FFFFFF"
-                    android:background="#FF5722"
-                    android:layout_marginBottom="12dp"/>
-
-                <TextView
-                    android:id="@+id/tvGrasaTituloTabla"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rango normal (Hombre)"
-                    android:textSize="11sp"
-                    android:textColor="#9E9E9E"
-                    android:layout_marginBottom="6dp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="4dp">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="32dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Esencial"
-                        android:textSize="10sp"
-                        android:textColor="#FFFFFF"
-                        android:background="#9C27B0"
-                        android:layout_marginEnd="2dp"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="32dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Atlético"
-                        android:textSize="10sp"
-                        android:textColor="#FFFFFF"
-                        android:background="#2196F3"
-                        android:layout_marginEnd="2dp"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="32dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Fitness"
-                        android:textSize="10sp"
-                        android:textColor="#FFFFFF"
-                        android:background="#4CAF50"
-                        android:layout_marginEnd="2dp"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="32dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Promedio"
-                        android:textSize="10sp"
-                        android:textColor="#FFFFFF"
-                        android:background="#FF9800"
-                        android:layout_marginEnd="2dp"/>
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="32dp"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="Obeso"
-                        android:textSize="10sp"
-                        android:textColor="#FFFFFF"
-                        android:background="#F44336"/>
+                <TextView android:id="@+id/tvGrasaCategoria" android:layout_width="match_parent" android:layout_height="36dp" android:gravity="center" android:text="--" android:textSize="14sp" android:textStyle="bold" android:textColor="#FFFFFF" android:background="#40916C" android:layout_marginBottom="12dp"/>
+                <TextView android:id="@+id/tvGrasaTituloTabla" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Rango normal (Hombre)" android:textSize="11sp" android:textColor="#52796F" android:layout_marginBottom="6dp"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:layout_marginBottom="4dp">
+                    <TextView android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:gravity="center" android:text="Esencial" android:textSize="10sp" android:textColor="#FFFFFF" android:background="#081C15" android:layout_marginEnd="2dp"/>
+                    <TextView android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:gravity="center" android:text="Atlético" android:textSize="10sp" android:textColor="#FFFFFF" android:background="#1B4332" android:layout_marginEnd="2dp"/>
+                    <TextView android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:gravity="center" android:text="Fitness" android:textSize="10sp" android:textColor="#FFFFFF" android:background="#2D6A4F" android:layout_marginEnd="2dp"/>
+                    <TextView android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:gravity="center" android:text="Promedio" android:textSize="10sp" android:textColor="#FFFFFF" android:background="#52B788" android:layout_marginEnd="2dp"/>
+                    <TextView android:layout_width="0dp" android:layout_height="32dp" android:layout_weight="1" android:gravity="center" android:text="Obeso" android:textSize="10sp" android:textColor="#FFFFFF" android:background="#95D5B2"/>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/tvGrasaRango1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="2–5%"
-                        android:textSize="9sp"
-                        android:textColor="#9C27B0"/>
-                    <TextView
-                        android:id="@+id/tvGrasaRango2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="6–13%"
-                        android:textSize="9sp"
-                        android:textColor="#2196F3"/>
-                    <TextView
-                        android:id="@+id/tvGrasaRango3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="14–17%"
-                        android:textSize="9sp"
-                        android:textColor="#4CAF50"/>
-                    <TextView
-                        android:id="@+id/tvGrasaRango4"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="18–24%"
-                        android:textSize="9sp"
-                        android:textColor="#FF9800"/>
-                    <TextView
-                        android:id="@+id/tvGrasaRango5"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="≥25%"
-                        android:textSize="9sp"
-                        android:textColor="#F44336"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                    <TextView android:id="@+id/tvGrasaRango1" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="2–5%" android:textSize="9sp" android:textColor="#081C15"/>
+                    <TextView android:id="@+id/tvGrasaRango2" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="6–13%" android:textSize="9sp" android:textColor="#1B4332"/>
+                    <TextView android:id="@+id/tvGrasaRango3" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="14–17%" android:textSize="9sp" android:textColor="#2D6A4F"/>
+                    <TextView android:id="@+id/tvGrasaRango4" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="18–24%" android:textSize="9sp" android:textColor="#52B788"/>
+                    <TextView android:id="@+id/tvGrasaRango5" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:text="≥25%" android:textSize="9sp" android:textColor="#74C69D"/>
                 </LinearLayout>
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- TMB Y CALORÍAS -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="3dp"
-            app:cardBackgroundColor="#FFFFFF">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="⚡ TMB y Calorías"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:textColor="#212121"
-                    android:layout_marginBottom="12dp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:background="#F3E5F5"
-                        android:padding="12dp"
-                        android:layout_marginEnd="6dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="TMB"
-                            android:textSize="11sp"
-                            android:textColor="#7B1FA2"/>
-                        <TextView
-                            android:id="@+id/tvTMB"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:textColor="#7B1FA2"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="kcal/día base"
-                            android:textSize="10sp"
-                            android:textColor="#9E9E9E"/>
+        <!--  TMB Y CALORÍAS  -->
+        <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="12dp" app:cardCornerRadius="16dp" app:cardElevation="3dp" app:cardBackgroundColor="#FFFFFF">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="⚡ TMB y Calorías" android:textSize="15sp" android:textStyle="bold" android:textColor="#1B4332" android:layout_marginBottom="12dp"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:background="#D8F3DC" android:padding="12dp" android:layout_marginEnd="6dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="TMB" android:textSize="11sp" android:textColor="#1B4332"/>
+                        <TextView android:id="@+id/tvTMB" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textSize="20sp" android:textStyle="bold" android:textColor="#1B4332"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="kcal/día base" android:textSize="10sp" android:textColor="#52796F"/>
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:background="#E8F5E9"
-                        android:padding="12dp"
-                        android:layout_marginEnd="6dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Objetivo"
-                            android:textSize="11sp"
-                            android:textColor="#2E7D32"/>
-                        <TextView
-                            android:id="@+id/tvCaloriasObjetivoCard"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:textColor="#2E7D32"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="kcal/día"
-                            android:textSize="10sp"
-                            android:textColor="#9E9E9E"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:background="#B7E4C7" android:padding="12dp" android:layout_marginEnd="6dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Objetivo" android:textSize="11sp" android:textColor="#1B4332"/>
+                        <TextView android:id="@+id/tvCaloriasObjetivoCard" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textSize="20sp" android:textStyle="bold" android:textColor="#1B4332"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="kcal/día" android:textSize="10sp" android:textColor="#2D6A4F"/>
                     </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:gravity="center"
-                        android:background="#FFF3E0"
-                        android:padding="12dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Consumidas"
-                            android:textSize="11sp"
-                            android:textColor="#E65100"/>
-                        <TextView
-                            android:id="@+id/tvCaloriasConsumidas"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="--"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            android:textColor="#E65100"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="kcal hoy"
-                            android:textSize="10sp"
-                            android:textColor="#9E9E9E"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center" android:background="#95D5B2" android:padding="12dp">
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Consumidas" android:textSize="11sp" android:textColor="#1B4332"/>
+                        <TextView android:id="@+id/tvCaloriasConsumidas" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textSize="20sp" android:textStyle="bold" android:textColor="#081C15"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="kcal hoy" android:textSize="10sp" android:textColor="#1B4332"/>
                     </LinearLayout>
                 </LinearLayout>
-
-                <TextView
-                    android:id="@+id/tvCaloriasEstado"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:gravity="center"
-                    android:text=""
-                    android:textSize="13sp"
-                    android:textColor="#757575"/>
-
+                <TextView android:id="@+id/tvCaloriasEstado" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:gravity="center" android:text="" android:textSize="13sp" android:textColor="#52796F"/>
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- COMPOSICIÓN CORPORAL -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="3dp"
-            app:cardBackgroundColor="#FFFFFF">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="💪 Composición Corporal"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:textColor="#212121"
-                    android:layout_marginBottom="12dp"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Peso total"
-                        android:textSize="13sp"
-                        android:textColor="#424242"/>
-                    <TextView
-                        android:id="@+id/tvPesoTotal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-- lb"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#212121"/>
+        <!--  COMPOSICIÓN CORPORAL  -->
+        <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="12dp" app:cardCornerRadius="16dp" app:cardElevation="3dp" app:cardBackgroundColor="#FFFFFF">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="💪 Composición Corporal" android:textSize="15sp" android:textStyle="bold" android:textColor="#1B4332" android:layout_marginBottom="12dp"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="8dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Peso total" android:textSize="13sp" android:textColor="#2D3A2E"/>
+                    <TextView android:id="@+id/tvPesoTotal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-- lb" android:textSize="15sp" android:textStyle="bold" android:textColor="#1B4332"/>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="4dp">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Masa magra"
-                        android:textSize="13sp"
-                        android:textColor="#424242"/>
-                    <TextView
-                        android:id="@+id/tvMasaMagra"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-- lb"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#1565C0"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="4dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Masa magra" android:textSize="13sp" android:textColor="#2D3A2E"/>
+                    <TextView android:id="@+id/tvMasaMagra" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-- lb" android:textSize="15sp" android:textStyle="bold" android:textColor="#2D6A4F"/>
                 </LinearLayout>
-                <ProgressBar
-                    android:id="@+id/progressMasaMagra"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:layout_marginBottom="10dp"
-                    android:progressTint="#1565C0"
-                    android:progressBackgroundTint="#E3F2FD"
-                    android:max="100"
-                    android:progress="0"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="4dp">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Masa muscular"
-                        android:textSize="13sp"
-                        android:textColor="#424242"/>
-                    <TextView
-                        android:id="@+id/tvMasaMuscular"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-- lb"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#2E7D32"/>
+                <ProgressBar android:id="@+id/progressMasaMagra" style="@style/Widget.AppCompat.ProgressBar.Horizontal" android:layout_width="match_parent" android:layout_height="6dp" android:layout_marginBottom="10dp" android:progressTint="#2D6A4F" android:progressBackgroundTint="#D8F3DC" android:max="100" android:progress="0"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="4dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Masa muscular" android:textSize="13sp" android:textColor="#2D3A2E"/>
+                    <TextView android:id="@+id/tvMasaMuscular" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-- lb" android:textSize="15sp" android:textStyle="bold" android:textColor="#1B4332"/>
                 </LinearLayout>
-                <ProgressBar
-                    android:id="@+id/progressMasaMuscular"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:layout_marginBottom="10dp"
-                    android:progressTint="#2E7D32"
-                    android:progressBackgroundTint="#E8F5E9"
-                    android:max="100"
-                    android:progress="0"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="4dp">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Masa grasa"
-                        android:textSize="13sp"
-                        android:textColor="#424242"/>
-                    <TextView
-                        android:id="@+id/tvMasaGrasa"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-- lb"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#F44336"/>
+                <ProgressBar android:id="@+id/progressMasaMuscular" style="@style/Widget.AppCompat.ProgressBar.Horizontal" android:layout_width="match_parent" android:layout_height="6dp" android:layout_marginBottom="10dp" android:progressTint="#1B4332" android:progressBackgroundTint="#B7E4C7" android:max="100" android:progress="0"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="4dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Masa grasa" android:textSize="13sp" android:textColor="#2D3A2E"/>
+                    <TextView android:id="@+id/tvMasaGrasa" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-- lb" android:textSize="15sp" android:textStyle="bold" android:textColor="#40916C"/>
                 </LinearLayout>
-                <ProgressBar
-                    android:id="@+id/progressMasaGrasa"
-                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="6dp"
-                    android:layout_marginBottom="10dp"
-                    android:progressTint="#F44336"
-                    android:progressBackgroundTint="#FFEBEE"
-                    android:max="100"
-                    android:progress="0"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="8dp">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Agua corporal"
-                        android:textSize="13sp"
-                        android:textColor="#424242"/>
-                    <TextView
-                        android:id="@+id/tvAgua"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-- %"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#0288D1"/>
+                <ProgressBar android:id="@+id/progressMasaGrasa" style="@style/Widget.AppCompat.ProgressBar.Horizontal" android:layout_width="match_parent" android:layout_height="6dp" android:layout_marginBottom="10dp" android:progressTint="#40916C" android:progressBackgroundTint="#D8F3DC" android:max="100" android:progress="0"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical" android:layout_marginBottom="8dp">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Agua corporal" android:textSize="13sp" android:textColor="#2D3A2E"/>
+                    <TextView android:id="@+id/tvAgua" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-- %" android:textSize="15sp" android:textStyle="bold" android:textColor="#52B788"/>
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical">
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Masa ósea"
-                        android:textSize="13sp"
-                        android:textColor="#424242"/>
-                    <TextView
-                        android:id="@+id/tvMasaOsea"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="-- lb"
-                        android:textSize="15sp"
-                        android:textStyle="bold"
-                        android:textColor="#795548"/>
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:gravity="center_vertical">
+                    <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:text="Masa ósea" android:textSize="13sp" android:textColor="#2D3A2E"/>
+                    <TextView android:id="@+id/tvMasaOsea" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="-- lb" android:textSize="15sp" android:textStyle="bold" android:textColor="#74C69D"/>
                 </LinearLayout>
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- MÉTRICAS EXTRA -->
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="3dp"
-            app:cardBackgroundColor="#FFFFFF">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="16dp">
-
-                <!-- Edad metabólica -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="🧬"
-                        android:textSize="20sp"
-                        android:gravity="center"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Edad&#10;metabólica"
-                        android:textSize="11sp"
-                        android:textColor="#757575"
-                        android:gravity="center"/>
-                    <TextView
-                        android:id="@+id/tvEdadMetabolica"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="--"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:textColor="#212121"
-                        android:gravity="center"/>
+        <!--  MÉTRICAS EXTRA  -->
+        <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="16dp" app:cardCornerRadius="16dp" app:cardElevation="3dp" app:cardBackgroundColor="#FFFFFF">
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="16dp">
+                <!--  Edad metabólica  -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="🧬" android:textSize="20sp" android:gravity="center"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Edad metabólica" android:textSize="11sp" android:textColor="#52796F" android:gravity="center"/>
+                    <TextView android:id="@+id/tvEdadMetabolica" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="--" android:textSize="20sp" android:textStyle="bold" android:textColor="#1B4332" android:gravity="center"/>
                 </LinearLayout>
-
-                <!-- Grasa visceral -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="🫀"
-                        android:textSize="20sp"
-                        android:gravity="center"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Grasa&#10;visceral"
-                        android:textSize="11sp"
-                        android:textColor="#757575"
-                        android:gravity="center"/>
-                    <TextView
-                        android:id="@+id/tvGrasaVisceral"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="--"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:textColor="#212121"
-                        android:gravity="center"/>
+                <!--  Grasa visceral  -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="🫀" android:textSize="20sp" android:gravity="center"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Grasa visceral" android:textSize="11sp" android:textColor="#52796F" android:gravity="center"/>
+                    <TextView android:id="@+id/tvGrasaVisceral" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="--" android:textSize="20sp" android:textStyle="bold" android:textColor="#1B4332" android:gravity="center"/>
                 </LinearLayout>
-
-                <!-- Puntuación salud -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="⭐"
-                        android:textSize="20sp"
-                        android:gravity="center"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Puntuación&#10;salud"
-                        android:textSize="11sp"
-                        android:textColor="#757575"
-                        android:gravity="center"/>
-                    <TextView
-                        android:id="@+id/tvPuntuacion"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="--"
-                        android:textSize="20sp"
-                        android:textStyle="bold"
-                        android:textColor="#212121"
-                        android:gravity="center"/>
+                <!--  Puntuación salud  -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="⭐" android:textSize="20sp" android:gravity="center"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Puntuación salud" android:textSize="11sp" android:textColor="#52796F" android:gravity="center"/>
+                    <TextView android:id="@+id/tvPuntuacion" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="--" android:textSize="20sp" android:textStyle="bold" android:textColor="#1B4332" android:gravity="center"/>
                 </LinearLayout>
-
-                <!-- Tipo cuerpo -->
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical"
-                    android:gravity="center">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="🏃"
-                        android:textSize="20sp"
-                        android:gravity="center"/>
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Tipo de&#10;cuerpo"
-                        android:textSize="11sp"
-                        android:textColor="#757575"
-                        android:gravity="center"/>
-                    <TextView
-                        android:id="@+id/tvTipoCuerpo"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="--"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:textColor="#212121"
-                        android:gravity="center"/>
+                <!--  Tipo cuerpo  -->
+                <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="🏃" android:textSize="20sp" android:gravity="center"/>
+                    <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="Tipo de cuerpo" android:textSize="11sp" android:textColor="#52796F" android:gravity="center"/>
+                    <TextView android:id="@+id/tvTipoCuerpo" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="--" android:textSize="13sp" android:textStyle="bold" android:textColor="#1B4332" android:gravity="center"/>
                 </LinearLayout>
-
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- Botón reportes -->
-        <Button
-            android:id="@+id/btnReportes"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginBottom="32dp"
-            android:backgroundTint="#FFFFFF"
-            android:text="📋 Ver reportes completos"
-            android:textColor="#2E7D32"
-            android:textSize="15sp"
-            android:stateListAnimator="@null"/>
-
+        <!--  Botón reportes  -->
+        <Button android:id="@+id/btnReportes" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginBottom="32dp" android:backgroundTint="#D8F3DC" android:text="📋 Ver reportes completos" android:textColor="#1B4332" android:textSize="15sp" android:stateListAnimator="@null"/>
     </LinearLayout>
 </ScrollView>

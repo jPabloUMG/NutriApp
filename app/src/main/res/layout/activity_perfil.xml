@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,151 +12,352 @@
         android:padding="24dp"
         android:gravity="center_horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <!--  ÍCONO DECORATIVO TOP  -->
+        <ImageView
+            android:id="@+id/ivPerfilTop"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_marginTop="32dp"
-            android:text="Tu perfil físico"
-            android:textSize="26sp"
-            android:textStyle="bold"
-            android:textColor="#212121" />
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/appimg"
+            android:scaleType="centerInside"
+            android:contentDescription="Logo de NutriApp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:text="Tu perfil físico"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="#1B4332"
+            android:letterSpacing="0.02"
+            android:fontFamily="sans-serif-medium"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             android:layout_marginBottom="32dp"
             android:text="Necesitamos estos datos para calcular tu plan"
             android:textSize="14sp"
-            android:textColor="#757575"
-            android:gravity="center" />
+            android:textColor="#677A6F"
+            android:gravity="center"
+            android:fontFamily="sans-serif-light"/>
 
-        <!-- Nombre -->
+        <!--  SECCIÓN: DATOS PERSONALES  -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DATOS PERSONALES"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:textColor="#4CAF50"
+            android:letterSpacing="0.12"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="10dp"
+            android:paddingStart="4dp"/>
+
+        <!--  Nombre  -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre completo"
+            android:textSize="12sp"
+            android:textColor="#2D6A4F"
+            android:fontFamily="sans-serif"
+            android:paddingStart="4dp"
+            android:layout_marginBottom="6dp"/>
+
         <EditText
             android:id="@+id/etNombre"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/bg_input"
-            android:hint="Nombre completo"
+            android:hint="Ej: Juan Pérez"
             android:inputType="textPersonName|textCapWords"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:textSize="16sp"
-            android:textColor="#212121"
-            android:textColorHint="#9E9E9E" />
+            android:textSize="15sp"
+            android:textColor="#1B4332"
+            android:textColorHint="#95D5B2"
+            android:fontFamily="sans-serif"/>
 
-        <!-- Edad -->
+        <!--  Edad -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edad"
+            android:textSize="12sp"
+            android:textColor="#2D6A4F"
+            android:fontFamily="sans-serif"
+            android:paddingStart="4dp"
+            android:layout_marginBottom="6dp"/>
+
         <EditText
             android:id="@+id/etEdad"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="4dp"
             android:background="@drawable/bg_input"
-            android:hint="Edad (años)"
+            android:hint="Ej: 28"
             android:inputType="number"
+            android:maxLength="3"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:textSize="16sp"
-            android:textColor="#212121"
-            android:textColorHint="#9E9E9E" />
+            android:textSize="15sp"
+            android:textColor="#1B4332"
+            android:textColorHint="#95D5B2"
+            android:fontFamily="sans-serif"/>
 
-        <!-- Género -->
+        <!-- Mensaje de error para Edad  -->
+        <TextView
+            android:id="@+id/tvErrorEdad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="información erronea"
+            android:textColor="#D32F2F"
+            android:textSize="12sp"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp"
+            android:paddingStart="16dp"/>
+
+        <!--  Género  -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Género"
-            android:textSize="14sp"
-            android:textColor="#757575"
+            android:textSize="12sp"
+            android:textColor="#2D6A4F"
+            android:fontFamily="sans-serif"
             android:layout_marginBottom="6dp"
             android:paddingStart="4dp"/>
 
-        <Spinner
-            android:id="@+id/spGenero"
+        <!--  CONTENEDOR DEL MENÚ DESPLEGABLE CORREGIDO  -->
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/bg_input"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            app:hintEnabled="false">
 
-        <!-- Altura -->
+            <AutoCompleteTextView
+                android:id="@+id/spGenero"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="@drawable/bg_input"
+                android:hint="Selecciona tu género"
+                android:inputType="none"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0"
+            android:layout_marginBottom="20dp"/>
+
+        <!--  SECCIÓN: MEDIDAS CORPORALES  -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MEDIDAS CORPORALES"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:textColor="#4CAF50"
+            android:letterSpacing="0.12"
+            android:fontFamily="sans-serif-medium"
+            android:layout_marginBottom="10dp"
+            android:paddingStart="4dp"/>
+
+        <!--  Altura  -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Altura (cm)"
+            android:textSize="12sp"
+            android:textColor="#2D6A4F"
+            android:fontFamily="sans-serif"
+            android:paddingStart="4dp"
+            android:layout_marginBottom="6dp"/>
+
         <EditText
             android:id="@+id/etAltura"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="4dp"
             android:background="@drawable/bg_input"
-            android:hint="Altura (cm) — ej: 170"
-            android:inputType="numberDecimal"
+            android:hint="Ej: 170"
+            android:inputType="number"
+            android:maxLength="3"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:textSize="16sp"
-            android:textColor="#212121"
-            android:textColorHint="#9E9E9E" />
+            android:textSize="15sp"
+            android:textColor="#1B4332"
+            android:textColorHint="#95D5B2"
+            android:fontFamily="sans-serif"/>
 
-        <!-- Peso -->
+        <!-- Mensaje de error para Altura  -->
+        <TextView
+            android:id="@+id/tvErrorAltura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="información erronea"
+            android:textColor="#D32F2F"
+            android:textSize="12sp"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp"
+            android:paddingStart="16dp"/>
+
+        <!--  Peso  -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Peso"
+            android:textSize="12sp"
+            android:textColor="#2D6A4F"
+            android:fontFamily="sans-serif"
+            android:paddingStart="4dp"
+            android:layout_marginBottom="6dp"/>
+
         <EditText
             android:id="@+id/etPeso"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="4dp"
             android:background="@drawable/bg_input"
-            android:hint="Peso (lb) — ej: 154.3"
+            android:hint="Ej: 154.3 lb"
             android:inputType="numberDecimal"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:textSize="16sp"
-            android:textColor="#212121"
-            android:textColorHint="#9E9E9E" />
+            android:textSize="15sp"
+            android:textColor="#1B4332"
+            android:textColorHint="#95D5B2"
+            android:fontFamily="sans-serif"/>
 
-        <!-- Grasa corporal -->
+        <!-- Mensaje de error para Peso -->
+        <TextView
+            android:id="@+id/tvErrorPeso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="información erronea"
+            android:textColor="#D32F2F"
+            android:textSize="12sp"
+            android:visibility="gone"
+            android:layout_marginBottom="12dp"
+            android:paddingStart="16dp"/>
+
+        <!--  Grasa corporal  -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="% Grasa corporal"
+            android:textSize="12sp"
+            android:textColor="#2D6A4F"
+            android:fontFamily="sans-serif"
+            android:paddingStart="4dp"
+            android:layout_marginBottom="6dp"/>
+
         <EditText
             android:id="@+id/etGrasa"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="4dp"
             android:background="@drawable/bg_input"
-            android:hint="% Grasa corporal — ej: 18.5"
+            android:hint="Ej: 18.5"
             android:inputType="numberDecimal"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:textSize="16sp"
-            android:textColor="#212121"
-            android:textColorHint="#9E9E9E" />
+            android:textSize="15sp"
+            android:textColor="#1B4332"
+            android:textColorHint="#95D5B2"
+            android:fontFamily="sans-serif"/>
 
+        <!-- Mensaje de error para Grasa -->
         <TextView
+            android:id="@+id/tvErrorGrasa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:paddingStart="4dp"
-            android:text="💡 Puedes obtener estos datos con tu balanza inteligente"
+            android:text="información erronea"
+            android:textColor="#D32F2F"
             android:textSize="12sp"
-            android:textColor="#9E9E9E" />
+            android:visibility="gone"
+            android:layout_marginBottom="8dp"
+            android:paddingStart="16dp"/>
 
-        <!-- Error -->
+        <!--  Tip card  -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:layout_marginTop="4dp"
+            android:background="#E8F5E9"
+            android:padding="12dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="💡"
+                android:textSize="16sp"
+                android:layout_marginEnd="8dp"/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Puedes obtener estos datos con tu balanza inteligente"
+                android:textSize="12sp"
+                android:textColor="#2D6A4F"
+                android:fontFamily="sans-serif-light"/>
+        </LinearLayout>
+
+        <!--  DIVIDER  -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#E0E0E0"
+            android:layout_marginBottom="20dp"/>
+
+        <!--  Error General (tvError se mantiene para validaciones globales) -->
         <TextView
             android:id="@+id/tvError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="12dp"
             android:text=""
-            android:textColor="#F44336"
+            android:textColor="#D32F2F"
             android:textSize="13sp"
-            android:paddingStart="4dp" />
+            android:fontFamily="sans-serif"
+            android:paddingStart="4dp"/>
 
-        <!-- Botón Guardar -->
+        <!--  Botón Guardar  -->
         <Button
             android:id="@+id/btnGuardar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginBottom="32dp"
-            android:backgroundTint="#4CAF50"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#2D6A4F"
             android:text="Continuar"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:stateListAnimator="@null" />
+            android:letterSpacing="0.05"
+            android:fontFamily="sans-serif-medium"
+            android:stateListAnimator="@null"/>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="32dp"
+            android:text="Tus datos están protegidos y son privados"
+            android:textSize="11sp"
+            android:textColor="#677A6F"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"/>
     </LinearLayout>
 </ScrollView>

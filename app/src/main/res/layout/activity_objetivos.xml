@@ -1,332 +1,691 @@
-<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="24dp">
-
+        <!--  HEADER  -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.01"
             android:text="¿Cuál es tu objetivo?"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="#212121" />
+            android:textColor="#212121"
+            android:textSize="26sp"
+            android:textStyle="bold" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:layout_marginBottom="20dp"
+            android:fontFamily="sans-serif-light"
             android:text="Selecciona el que mejor te describe"
-            android:textSize="14sp"
-            android:textColor="#757575" />
-
-        <!-- Perder peso -->
+            android:textColor="#424242"
+            android:textSize="14sp" />
+        <!--  SECCIÓN LABEL  -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.12"
+            android:paddingStart="4dp"
+            android:text="OBJETIVO PRINCIPAL"
+            android:textColor="#2D6A4F"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+        <!--  Perder peso  -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardPerder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF"
+            android:layout_marginBottom="10dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical">
-                <TextView android:layout_width="40dp" android:layout_height="wrap_content"
-                    android:text="🔥" android:textSize="24sp" />
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical" android:layout_marginStart="12dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Perder peso" android:textSize="16sp"
-                        android:textStyle="bold" android:textColor="#212121"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Reducir grasa corporal" android:textSize="13sp"
-                        android:textColor="#757575"/>
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="#FFFFFF"
+                    android:gravity="center"
+                    android:text="🔥"
+                    android:textSize="22sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Perder peso"
+                        android:textColor="#212121"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Reducir grasa corporal"
+                        android:textColor="#424242"
+                        android:textSize="12sp" />
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="#74C69D"
+                    android:textSize="20sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- Mantener peso -->
+        <!--  Mantener peso  -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardMantener"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF"
+            android:layout_marginBottom="10dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical">
-                <TextView android:layout_width="40dp" android:layout_height="wrap_content"
-                    android:text="⚖️" android:textSize="24sp" />
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical" android:layout_marginStart="12dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Mantener peso" android:textSize="16sp"
-                        android:textStyle="bold" android:textColor="#212121"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Conservar mi composición corporal" android:textSize="13sp"
-                        android:textColor="#757575"/>
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="#F7F8F7"
+                    android:gravity="center"
+                    android:text="⚖️"
+                    android:textSize="22sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Mantener peso"
+                        android:textColor="#212121"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Conservar mi composición corporal"
+                        android:textColor="#424242"
+                        android:textSize="12sp" />
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="#74C69D"
+                    android:textSize="20sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- Ganar peso -->
+        <!--  Ganar peso  -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardGanar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF"
+            android:layout_marginBottom="10dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical">
-                <TextView android:layout_width="40dp" android:layout_height="wrap_content"
-                    android:text="📈" android:textSize="24sp" />
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical" android:layout_marginStart="12dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Ganar peso" android:textSize="16sp"
-                        android:textStyle="bold" android:textColor="#212121"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Aumentar masa corporal" android:textSize="13sp"
-                        android:textColor="#757575"/>
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="#F9FAF9"
+                    android:gravity="center"
+                    android:text="📈"
+                    android:textSize="22sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Ganar peso"
+                        android:textColor="#212121"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Aumentar masa corporal"
+                        android:textColor="#424242"
+                        android:textSize="12sp" />
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="#74C69D"
+                    android:textSize="20sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- Definición -->
+        <!--  Definición  -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardDefinir"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF"
+            android:layout_marginBottom="10dp"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical">
-                <TextView android:layout_width="40dp" android:layout_height="wrap_content"
-                    android:text="💪" android:textSize="24sp" />
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical" android:layout_marginStart="12dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Definición" android:textSize="16sp"
-                        android:textStyle="bold" android:textColor="#212121"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Marcar músculo, reducir grasa" android:textSize="13sp"
-                        android:textColor="#757575"/>
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="#F9FDFB"
+                    android:gravity="center"
+                    android:text="💪"
+                    android:textSize="22sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Definición"
+                        android:textColor="#212121"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Marcar músculo, reducir grasa"
+                        android:textColor="#424242"
+                        android:textSize="12sp" />
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="#74C69D"
+                    android:textSize="20sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- Volumen -->
+        <!--  Volumen  -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardVolumen"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="28dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF"
             android:clickable="true"
-            android:focusable="true">
+            android:focusable="true"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="3dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="16dp"
-                android:gravity="center_vertical">
-                <TextView android:layout_width="40dp" android:layout_height="wrap_content"
-                    android:text="🏋️" android:textSize="24sp" />
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                    android:orientation="vertical" android:layout_marginStart="12dp">
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Volumen" android:textSize="16sp"
-                        android:textStyle="bold" android:textColor="#212121"/>
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                        android:text="Ganar músculo al máximo" android:textSize="13sp"
-                        android:textColor="#757575"/>
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="#FDFCFC"
+                    android:gravity="center"
+                    android:text="🏋️"
+                    android:textSize="22sp" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Volumen"
+                        android:textColor="#212121"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Ganar músculo al máximo"
+                        android:textColor="#424242"
+                        android:textSize="12sp" />
                 </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="#74C69D"
+                    android:textSize="20sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- Nivel de actividad -->
+        <!--  DIVIDER  -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="20dp"
+            android:background="#B7E4C7" />
+        <!--  SECCIÓN ACTIVIDAD  -->
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Nivel de actividad física"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="#212121"
-            android:layout_marginBottom="12dp" />
-
-        <!-- Sedentario -->
+            android:layout_marginBottom="12dp"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.12"
+            android:paddingStart="4dp"
+            android:text="NIVEL DE ACTIVIDAD FÍSICA"
+            android:textColor="#2D6A4F"
+            android:textSize="11sp"
+            android:textStyle="bold" />
+        <!--  Sedentario  -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardSedentario"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF"
+            android:layout_marginBottom="8dp"
             android:clickable="true"
-            android:focusable="true">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:padding="14dp" android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="Sedentario" android:textSize="15sp"
-                    android:textStyle="bold" android:textColor="#212121"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="Poco o ningún ejercicio" android:textSize="12sp"
-                    android:textColor="#9E9E9E"/>
+            android:focusable="true"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="14dp"
+                    android:background="#D8F3DC" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Sedentario"
+                        android:textColor="#212121"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Poco o ningún ejercicio"
+                        android:textColor="#424242"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="#74C69D"
+                    android:textSize="20sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- Ligero -->
+        <!--  Ligero  -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardLigero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF"
+            android:layout_marginBottom="8dp"
             android:clickable="true"
-            android:focusable="true">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:padding="14dp" android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="Ligero" android:textSize="15sp"
-                    android:textStyle="bold" android:textColor="#212121"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="Ejercicio 1-3 días/semana" android:textSize="12sp"
-                    android:textColor="#9E9E9E"/>
+            android:focusable="true"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="14dp"
+                    android:background="#B7E4C7" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Ligero"
+                        android:textColor="#212121"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Ejercicio 1–3 días/semana"
+                        android:textColor="#424242"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="#74C69D"
+                    android:textSize="20sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- Moderado -->
+        <!--  Moderado  -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardModerado"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF"
+            android:layout_marginBottom="8dp"
             android:clickable="true"
-            android:focusable="true">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:padding="14dp" android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="Moderado" android:textSize="15sp"
-                    android:textStyle="bold" android:textColor="#212121"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="Ejercicio 3-5 días/semana" android:textSize="12sp"
-                    android:textColor="#9E9E9E"/>
+            android:focusable="true"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="14dp"
+                    android:background="#95D5B2" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Moderado"
+                        android:textColor="#212121"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Ejercicio 3–5 días/semana"
+                        android:textColor="#424242"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="#74C69D"
+                    android:textSize="20sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- Activo -->
+        <!--  Activo  -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardActivo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF"
+            android:layout_marginBottom="8dp"
             android:clickable="true"
-            android:focusable="true">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:padding="14dp" android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="Activo" android:textSize="15sp"
-                    android:textStyle="bold" android:textColor="#212121"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="Ejercicio intenso 6-7 días/semana" android:textSize="12sp"
-                    android:textColor="#9E9E9E"/>
+            android:focusable="true"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="14dp"
+                    android:background="#52B788" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Activo"
+                        android:textColor="#212121"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Ejercicio intenso 6–7 días/semana"
+                        android:textColor="#424242"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="#74C69D"
+                    android:textSize="20sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- Muy activo -->
+        <!--  Muy activo  -->
         <androidx.cardview.widget.CardView
             android:id="@+id/cardMuyActivo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="24dp"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="4dp"
-            app:cardBackgroundColor="#FFFFFF"
+            android:layout_marginBottom="28dp"
             android:clickable="true"
-            android:focusable="true">
-            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
-                android:padding="14dp" android:orientation="vertical">
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="Muy activo" android:textSize="15sp"
-                    android:textStyle="bold" android:textColor="#212121"/>
-                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                    android:text="Atleta / trabajo físico intenso" android:textSize="12sp"
-                    android:textColor="#9E9E9E"/>
+            android:focusable="true"
+            app:cardBackgroundColor="#FFFFFF"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="2dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <View
+                    android:layout_width="4dp"
+                    android:layout_height="36dp"
+                    android:layout_marginEnd="14dp"
+                    android:background="#2D6A4F" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:text="Muy activo"
+                        android:textColor="#212121"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-light"
+                        android:text="Atleta / trabajo físico intenso"
+                        android:textColor="#424242"
+                        android:textSize="12sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="#74C69D"
+                    android:textSize="20sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- Error -->
+        <!--  DIVIDER  -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="16dp"
+            android:background="#B7E4C7" />
+        <!--  Error  -->
         <TextView
             android:id="@+id/tvError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="12dp"
+            android:fontFamily="sans-serif"
+            android:paddingStart="4dp"
             android:text=""
-            android:textColor="#F44336"
-            android:textSize="13sp"
-            android:paddingStart="4dp" />
-
-        <!-- Botón continuar -->
+            android:textColor="#40916C"
+            android:textSize="13sp" />
+        <!--  Botón continuar  -->
         <Button
             android:id="@+id/btnContinuar"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:layout_marginBottom="32dp"
-            android:backgroundTint="#4CAF50"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="#1B4332"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.05"
+            android:stateListAnimator="@null"
             android:text="Comenzar"
-            android:textColor="#FFFFFF"
+            android:textColor="#D8F3DC"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:stateListAnimator="@null" />
+            android:textStyle="bold" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="sans-serif-light"
+            android:gravity="center"
+            android:text="Podrás cambiar esto más adelante"
+            android:textColor="#424242"
+            android:textSize="11sp" />
     </LinearLayout>
 </ScrollView>

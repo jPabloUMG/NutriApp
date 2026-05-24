@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5">
+    android:background="@drawable/one">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -10,53 +11,79 @@
         android:orientation="vertical"
         android:padding="24dp">
 
+        <!-- HEADER -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Registrar comida"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="#212121"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="20dp"/>
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="6dp"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.01"
+            android:text="Registrar tu comida"
+            android:textColor="@color/white"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Toma una foto o ingresa manualmente"
+            android:textAlignment="center"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <!-- Imagen -->
-        <ImageView
-            android:id="@+id/ivFoto"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="220dp"
-            android:background="#E0E0E0"
-            android:scaleType="centerCrop"
-            android:layout_marginBottom="12dp"
-            android:src="@android:drawable/ic_menu_camera"/>
+            android:layout_marginBottom="14dp"
+            app:cardBackgroundColor="#0A9AA3"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp">
+
+            <ImageView
+                android:id="@+id/ivFoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@android:drawable/ic_menu_camera" />
+
+        </androidx.cardview.widget.CardView>
 
         <!-- Botones foto -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginBottom="12dp">
+            android:layout_marginBottom="12dp"
+            android:orientation="horizontal">
 
             <Button
                 android:id="@+id/btnCamara"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
-                android:layout_weight="1"
                 android:layout_marginEnd="8dp"
-                android:backgroundTint="#4CAF50"
+                android:layout_weight="1"
+                android:backgroundTint="#1B4332"
+                android:fontFamily="sans-serif-medium"
+                android:stateListAnimator="@null"
                 android:text="📷 Cámara"
-                android:textColor="#FFFFFF"
-                android:stateListAnimator="@null"/>
+                android:textColor="#D8F3DC"
+                android:textSize="13sp" />
 
             <Button
                 android:id="@+id/btnGaleria"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
-                android:backgroundTint="#757575"
+                android:backgroundTint="#2D6A4F"
+                android:fontFamily="sans-serif-medium"
+                android:stateListAnimator="@null"
                 android:text="🖼 Galería"
-                android:textColor="#FFFFFF"
-                android:stateListAnimator="@null"/>
+                android:textColor="#D8F3DC"
+                android:textSize="13sp" />
 
         </LinearLayout>
 
@@ -64,14 +91,16 @@
         <Button
             android:id="@+id/btnAnalizar"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
+            android:layout_height="56dp"
             android:layout_marginBottom="8dp"
-            android:backgroundTint="#1976D2"
+            android:backgroundTint="#1B4332"
+            android:fontFamily="sans-serif-medium"
+            android:letterSpacing="0.04"
+            android:stateListAnimator="@null"
             android:text="✨ Analizar con IA"
-            android:textColor="#FFFFFF"
+            android:textColor="#D8F3DC"
             android:textSize="15sp"
-            android:textStyle="bold"
-            android:stateListAnimator="@null"/>
+            android:textStyle="bold" />
 
         <!-- Progress -->
         <ProgressBar
@@ -80,7 +109,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="8dp"
-            android:visibility="gone"/>
+            android:indeterminateTint="#74C69D"
+            android:visibility="gone" />
 
         <!-- Botón manual -->
         <Button
@@ -88,22 +118,32 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginBottom="16dp"
-            android:backgroundTint="#FFFFFF"
+            android:backgroundTint="#0A9AA3"
+            android:fontFamily="sans-serif"
+            android:stateListAnimator="@null"
             android:text="Ingresar manualmente"
-            android:textColor="#4CAF50"
-            android:stateListAnimator="@null"/>
+            android:textColor="#D8F3DC"
+            android:textSize="14sp" />
 
         <!-- Error -->
         <TextView
             android:id="@+id/tvError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="sans-serif"
             android:text=""
-            android:textColor="#F44336"
-            android:textSize="13sp"
-            android:layout_marginBottom="8dp"/>
+            android:textColor="#95D5B2"
+            android:textSize="13sp" />
 
-        <!-- Formulario manual (oculto hasta analizar o botón manual) -->
+        <!-- DIVIDER -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="20dp"
+            android:background="#0A9AA3" />
+
+        <!-- Formulario manual -->
         <LinearLayout
             android:id="@+id/layoutManual"
             android:layout_width="match_parent"
@@ -111,126 +151,264 @@
             android:orientation="vertical"
             android:visibility="gone">
 
+            <!-- SECCIÓN LABEL (Detalle de la comida) -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.12"
+                android:paddingStart="4dp"
+                android:text="DETALLE DE LA COMIDA"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                android:textStyle="bold" />
+
             <!-- Tiempo de comida -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="sans-serif"
+                android:paddingStart="4dp"
                 android:text="Tiempo de comida"
-                android:textSize="14sp"
-                android:textColor="#757575"
-                android:layout_marginBottom="6dp"/>
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="12sp" />
 
-            <Spinner
-                android:id="@+id/spTiempo"
+            <!-- MENÚ DESPLEGABLE MATERIAL DESIGN -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/bg_input"
-                android:paddingStart="12dp"/>
+                app:hintEnabled="false">
 
-            <!-- Nombre -->
+                <AutoCompleteTextView
+                    android:id="@+id/spTiempo"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="@drawable/bg_input"
+                    android:hint="Selecciona tiempo de comida"
+                    android:inputType="none"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="#1B4332"
+                    android:textColorHint="#74C69D"
+                    android:textSize="15sp" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Nombre del alimento -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="sans-serif"
+                android:paddingStart="4dp"
+                android:text="Nombre del alimento"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="12sp" />
+
             <EditText
                 android:id="@+id/etNombre"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="14dp"
                 android:background="@drawable/bg_input"
-                android:hint="Nombre del alimento"
+                android:fontFamily="sans-serif"
+                android:hint="Ej: Arroz con pollo"
+                android:inputType="textCapSentences"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:inputType="textCapSentences"
-                android:textSize="15sp"
-                android:textColor="#212121"
-                android:textColorHint="#9E9E9E"/>
+                android:textColor="#1B4332"
+                android:textColorHint="#74C69D"
+                android:textSize="15sp" />
 
             <!-- Cantidad -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="sans-serif"
+                android:paddingStart="4dp"
+                android:text="Cantidad"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="12sp" />
+
             <EditText
                 android:id="@+id/etCantidad"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="14dp"
                 android:background="@drawable/bg_input"
-                android:hint="Cantidad (ej: 1 plato, 200g)"
+                android:fontFamily="sans-serif"
+                android:hint="Ej: 1 plato, 200g"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:textSize="15sp"
-                android:textColor="#212121"
-                android:textColorHint="#9E9E9E"/>
+                android:textColor="#1B4332"
+                android:textColorHint="#74C69D"
+                android:textSize="15sp" />
+
+            <!-- SECCIÓN MACROS -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:background="#0A9AA3" />
+
+            <!-- Información Nutricional -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.12"
+                android:paddingStart="4dp"
+                android:text="INFORMACIÓN NUTRICIONAL"
+                android:textColor="@color/white"
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
             <!-- Calorías -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="sans-serif"
+                android:paddingStart="4dp"
+                android:text="Calorías"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="12sp" />
+
             <EditText
                 android:id="@+id/etCalorias"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="14dp"
                 android:background="@drawable/bg_input"
-                android:hint="Calorías (kcal)"
+                android:fontFamily="sans-serif"
+                android:hint="Ej: 350 kcal"
                 android:inputType="numberDecimal"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:textSize="15sp"
-                android:textColor="#212121"
-                android:textColorHint="#9E9E9E"/>
+                android:textColor="#1B4332"
+                android:textColorHint="#74C69D"
+                android:textSize="15sp" />
 
             <!-- Proteínas -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="sans-serif"
+                android:paddingStart="4dp"
+                android:text="Proteínas"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="12sp" />
+
             <EditText
                 android:id="@+id/etProteinas"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="14dp"
                 android:background="@drawable/bg_input"
-                android:hint="Proteínas (g)"
+                android:fontFamily="sans-serif"
+                android:hint="Ej: 28g"
                 android:inputType="numberDecimal"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:textSize="15sp"
-                android:textColor="#212121"
-                android:textColorHint="#9E9E9E"/>
+                android:textColor="#1B4332"
+                android:textColorHint="#74C69D"
+                android:textSize="15sp" />
 
             <!-- Carbohidratos -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="sans-serif"
+                android:paddingStart="4dp"
+                android:text="Carbohidratos"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="12sp" />
+
             <EditText
                 android:id="@+id/etCarbos"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginBottom="12dp"
+                android:layout_marginBottom="14dp"
                 android:background="@drawable/bg_input"
-                android:hint="Carbohidratos (g)"
+                android:fontFamily="sans-serif"
+                android:hint="Ej: 45g"
                 android:inputType="numberDecimal"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:textSize="15sp"
-                android:textColor="#212121"
-                android:textColorHint="#9E9E9E"/>
+                android:textColor="#1B4332"
+                android:textColorHint="#74C69D"
+                android:textSize="15sp" />
 
             <!-- Grasas -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:fontFamily="sans-serif"
+                android:paddingStart="4dp"
+                android:text="Grasas"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="12sp" />
+
             <EditText
                 android:id="@+id/etGrasas"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="24dp"
                 android:background="@drawable/bg_input"
-                android:hint="Grasas (g)"
+                android:fontFamily="sans-serif"
+                android:hint="Ej: 12g"
                 android:inputType="numberDecimal"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:textSize="15sp"
-                android:textColor="#212121"
-                android:textColorHint="#9E9E9E"/>
+                android:textColor="#1B4332"
+                android:textColorHint="#74C69D"
+                android:textSize="15sp" />
 
             <!-- Botón guardar -->
             <Button
                 android:id="@+id/btnGuardar"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:layout_marginBottom="32dp"
-                android:backgroundTint="#4CAF50"
+                android:layout_marginBottom="12dp"
+                android:backgroundTint="#1B4332"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.05"
+                android:stateListAnimator="@null"
                 android:text="Guardar comida"
-                android:textColor="#FFFFFF"
+                android:textColor="#D8F3DC"
                 android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <!-- Texto Historial -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="32dp"
+                android:fontFamily="sans-serif-light"
+                android:gravity="center"
+                android:text="Los datos se guardan en tu historial diario"
+                android:textColor="@color/white"
                 android:textStyle="bold"
-                android:stateListAnimator="@null"/>
+                android:textSize="11sp" />
 
         </LinearLayout>
-
     </LinearLayout>
 </ScrollView>
