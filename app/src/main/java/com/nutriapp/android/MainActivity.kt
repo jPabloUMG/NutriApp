@@ -175,6 +175,7 @@ class MainActivity : AppCompatActivity() {
 
         btnReportes.setOnClickListener {
             // TODO: ReportesActivity
+            startActivity(Intent(this, ReportesActivity::class.java))
         }
     }
 

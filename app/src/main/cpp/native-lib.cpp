@@ -507,5 +507,31 @@ Java_com_nutriapp_android_AdminActivity_activarUsuarioAdmin(
         JNIEnv* env, jobject thiz, jint usuarioId) {
     return (jboolean)activarUsuario((int)usuarioId);
 }
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_nutriapp_android_ReportesActivity_obtenerResumenReportes(
+        JNIEnv* env, jobject thiz, jint usuarioId) {
+
+    // Obtener fecha actual
+    time_t t = time(nullptr);
+    char buffer[11];
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d", localtime(&t));
+    std::string fechaHoy(buffer);
+
+    // Consultar comidas del día
+    std::vector<RegistroComida> lista = obtenerRegistrosComida(usuarioId, fechaHoy);
+
+    std::string resumen;
+    for (const auto& r : lista) {
+        resumen += r.fecha + " " + r.hora + " - " + r.tiempo_comida + ": "
+                   + r.nombre_alimento + " (" + std::to_string((int)r.calorias) + " kcal)\n";
+    }
+
+    if (resumen.empty()) {
+        resumen = "No hay comidas registradas para hoy.";
+    }
+
+    return env->NewStringUTF(resumen.c_str());
+}
 
 } // extern "C"
