@@ -435,5 +435,103 @@ Java_com_nutriapp_android_RegistroComidaActivity_guardarRegistroComida(
     env->ReleaseStringUTFChars(fuente, fuenteChar);
     return (jboolean)insertarRegistroComida(r);
 }
+// ══════════════════════════════════════════════════════════════════
+//  ADMIN ACTIVITY
+// ══════════════════════════════════════════════════════════════════
+
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_AdminActivity_inicializarDB(
+        JNIEnv* env, jobject thiz, jstring ruta) {
+    const char* rutaChar = env->GetStringUTFChars(ruta, nullptr);
+    bool result = inicializarDB(std::string(rutaChar));
+    env->ReleaseStringUTFChars(ruta, rutaChar);
+    return result;
+}
+
+JNIEXPORT jstring JNICALL
+Java_com_nutriapp_android_AdminActivity_obtenerTodosUsuariosStr(
+        JNIEnv* env, jobject thiz) {
+    std::vector<Usuario> lista = obtenerTodosUsuarios();
+    std::string result;
+    for (const auto& u : lista) {
+        result += std::to_string(u.id) + "|"
+                  + u.correo + "|"
+                  + std::to_string(u.rol_id) + "|"
+                  + std::to_string(u.activo) + "\n";
+    }
+    return env->NewStringUTF(result.c_str());
+}
+
+JNIEXPORT jstring JNICALL
+Java_com_nutriapp_android_AdminActivity_obtenerTodosLogsStr(
+        JNIEnv* env, jobject thiz) {
+    std::vector<Log> lista = obtenerTodosLogs();
+    std::string result;
+    for (const auto& l : lista) {
+        result += std::to_string(l.usuario_id) + "|"
+                  + l.accion + "|"
+                  + l.detalle + "|"
+                  + l.pantalla + "|"
+                  + l.fecha_hora + "|"
+                  + std::to_string(l.exitoso) + "\n";
+    }
+    return env->NewStringUTF(result.c_str());
+}
+
+JNIEXPORT jstring JNICALL
+Java_com_nutriapp_android_AdminActivity_obtenerEstadisticasAdmin(
+        JNIEnv* env, jobject thiz) {
+    std::vector<Usuario> usuarios = obtenerTodosUsuarios();
+    std::vector<Log> logs = obtenerTodosLogs();
+
+    int totalUsuarios   = (int)usuarios.size();
+    int totalLogs       = (int)logs.size();
+    int usuariosActivos = 0;
+    for (const auto& u : usuarios)
+        if (u.activo) usuariosActivos++;
+
+    std::string result = std::to_string(totalUsuarios) + "|"
+                         + std::to_string(totalLogs) + "|"
+                         + std::to_string(usuariosActivos);
+    return env->NewStringUTF(result.c_str());
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_AdminActivity_desactivarUsuarioAdmin(
+        JNIEnv* env, jobject thiz, jint usuarioId) {
+    return (jboolean)desactivarUsuario((int)usuarioId);
+}
+
+JNIEXPORT jboolean JNICALL
+Java_com_nutriapp_android_AdminActivity_activarUsuarioAdmin(
+        JNIEnv* env, jobject thiz, jint usuarioId) {
+    return (jboolean)activarUsuario((int)usuarioId);
+}
+extern "C"
+JNIEXPORT jstring JNICALL
+Java_com_nutriapp_android_ReportesActivity_obtenerResumenReportes(
+        JNIEnv* env, jobject thiz, jint usuarioId) {
+
+    // Obtener fecha actual
+    time_t t = time(nullptr);
+    char buffer[11];
+    strftime(buffer, sizeof(buffer), "%Y-%m-%d", localtime(&t));
+    std::string fechaHoy(buffer);
+
+    // Consultar comidas del día
+    std::vector<RegistroComida> lista = obtenerRegistrosComida(usuarioId, fechaHoy);
+
+    std::string resumen;
+    for (const auto& r : lista) {
+        resumen += r.fecha + " " + r.hora + " - " + r.tiempo_comida + ": "
+                   + r.nombre_alimento + " (" + std::to_string((int)r.calorias) + " kcal)\n";
+    }
+
+    if (resumen.empty()) {
+        resumen = "No hay comidas registradas para hoy.";
+    }
+
+    return env->NewStringUTF(resumen.c_str());
+}
 
 } // extern "C"

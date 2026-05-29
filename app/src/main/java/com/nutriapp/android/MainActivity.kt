@@ -32,10 +32,6 @@ class MainActivity : AppCompatActivity() {
         // Referencias vistas
         val tvSaludo              = findViewById<TextView>(R.id.tvSaludo)
         val tvFecha               = findViewById<TextView>(R.id.tvFecha)
-        val tvCalorias            = findViewById<TextView>(R.id.tvCalorias)
-        val tvCaloriasObjetivo    = findViewById<TextView>(R.id.tvCaloriasObjetivo)
-        val tvCaloriasRestantes   = findViewById<TextView>(R.id.tvCaloriasRestantes)
-        val progressCalorias      = findViewById<ProgressBar>(R.id.progressCalorias)
         val tvIMCValor            = findViewById<TextView>(R.id.tvIMCValor)
         val tvIMCCategoria        = findViewById<TextView>(R.id.tvIMCCategoria)
         val tvGrasaValor          = findViewById<TextView>(R.id.tvGrasaValor)
@@ -48,8 +44,7 @@ class MainActivity : AppCompatActivity() {
         val tvGrasaRango5         = findViewById<TextView>(R.id.tvGrasaRango5)
         val tvTMB                 = findViewById<TextView>(R.id.tvTMB)
         val tvCaloriasObjetivoCard= findViewById<TextView>(R.id.tvCaloriasObjetivoCard)
-        val tvCaloriasConsumidas  = findViewById<TextView>(R.id.tvCaloriasConsumidas)
-        val tvCaloriasEstado      = findViewById<TextView>(R.id.tvCaloriasEstado)
+        val tvCaloriasObjetivo    = findViewById<TextView>(R.id.tvCaloriasObjetivo)
         val tvPesoTotal           = findViewById<TextView>(R.id.tvPesoTotal)
         val tvMasaMagra           = findViewById<TextView>(R.id.tvMasaMagra)
         val tvMasaMuscular        = findViewById<TextView>(R.id.tvMasaMuscular)
@@ -72,12 +67,12 @@ class MainActivity : AppCompatActivity() {
 
         // Perfil
         val perfil = obtenerPerfilUsuario(usuarioId)
-        val genero = perfil[0]  // "Masculino" o "Femenino"
+        val genero = perfil[0]
         val nombre = perfil[1]
         tvSaludo.text = "¡Hola, ${nombre.split(" ")[0]}!"
 
         // Última medición
-        val medicion = obtenerUltimaMedicion(usuarioId)
+        val medicion     = obtenerUltimaMedicion(usuarioId)
         val tieneMedicion = medicion[0] != "-1"
 
         if (tieneMedicion) {
@@ -99,10 +94,10 @@ class MainActivity : AppCompatActivity() {
             // ── IMC ──────────────────────────────────────────────
             tvIMCValor.text = "%.1f".format(imc)
             val (imcLabel, imcColor) = when {
-                imc < 18.5f -> Pair("⚠ Bajo peso", "#2196F3")
-                imc < 25.0f -> Pair("✓ Peso normal", "#4CAF50")
-                imc < 30.0f -> Pair("⚠ Sobrepeso", "#FF9800")
-                else        -> Pair("✗ Obesidad", "#F44336")
+                imc < 18.5f -> Pair("⚠ Bajo peso",   "#2196F3")
+                imc < 25.0f -> Pair("✓ Peso normal",  "#4CAF50")
+                imc < 30.0f -> Pair("⚠ Sobrepeso",    "#FF9800")
+                else        -> Pair("✗ Obesidad",      "#F44336")
             }
             tvIMCCategoria.text = imcLabel
             tvIMCCategoria.setBackgroundColor(Color.parseColor(imcColor))
@@ -110,7 +105,6 @@ class MainActivity : AppCompatActivity() {
 
             // ── % GRASA ───────────────────────────────────────────
             tvGrasaValor.text = "%.1f %%".format(grasa)
-
             val esHombre = genero == "Masculino"
             if (esHombre) {
                 tvGrasaTituloTabla.text = "Rangos ACE/OMS (Hombre)"
@@ -120,11 +114,11 @@ class MainActivity : AppCompatActivity() {
                 tvGrasaRango4.text = "18–24%"
                 tvGrasaRango5.text = "≥25%"
                 val (grasaLabel, grasaColor) = when {
-                    grasa < 6f  -> Pair("Esencial", "#9C27B0")
-                    grasa < 14f -> Pair("✓ Atlético", "#2196F3")
-                    grasa < 18f -> Pair("✓ Fitness", "#4CAF50")
-                    grasa < 25f -> Pair("⚠ Promedio", "#FF9800")
-                    else        -> Pair("✗ Obeso", "#F44336")
+                    grasa < 6f  -> Pair("Esencial",      "#9C27B0")
+                    grasa < 14f -> Pair("✓ Atlético",    "#2196F3")
+                    grasa < 18f -> Pair("✓ Fitness",     "#4CAF50")
+                    grasa < 25f -> Pair("⚠ Promedio",    "#FF9800")
+                    else        -> Pair("✗ Obeso",        "#F44336")
                 }
                 tvGrasaCategoria.text = grasaLabel
                 tvGrasaCategoria.setBackgroundColor(Color.parseColor(grasaColor))
@@ -137,18 +131,18 @@ class MainActivity : AppCompatActivity() {
                 tvGrasaRango4.text = "25–31%"
                 tvGrasaRango5.text = "≥32%"
                 val (grasaLabel, grasaColor) = when {
-                    grasa < 14f -> Pair("Esencial", "#9C27B0")
-                    grasa < 21f -> Pair("✓ Atlético", "#2196F3")
-                    grasa < 25f -> Pair("✓ Fitness", "#4CAF50")
-                    grasa < 32f -> Pair("⚠ Promedio", "#FF9800")
-                    else        -> Pair("✗ Obeso", "#F44336")
+                    grasa < 14f -> Pair("Esencial",      "#9C27B0")
+                    grasa < 21f -> Pair("✓ Atlético",    "#2196F3")
+                    grasa < 25f -> Pair("✓ Fitness",     "#4CAF50")
+                    grasa < 32f -> Pair("⚠ Promedio",    "#FF9800")
+                    else        -> Pair("✗ Obeso",        "#F44336")
                 }
                 tvGrasaCategoria.text = grasaLabel
                 tvGrasaCategoria.setBackgroundColor(Color.parseColor(grasaColor))
                 tvGrasaValor.setTextColor(Color.parseColor(grasaColor))
             }
 
-            // ── TMB Y CALORÍAS ────────────────────────────────────
+            // ── TMB Y CALORÍAS OBJETIVO ───────────────────────────
             tvTMB.text = "%.0f".format(tmb)
             tvCaloriasObjetivoCard.text = "%.0f".format(calObjetivo)
             tvCaloriasObjetivo.text = "Objetivo: %.0f kcal".format(calObjetivo)
@@ -161,11 +155,10 @@ class MainActivity : AppCompatActivity() {
             tvMasaOsea.text     = "%.1f lb".format(masaOsea)
             tvAgua.text         = "%.1f %%".format(agua)
 
-            // Barras de progreso (% del peso total)
             if (peso > 0) {
-                progressMasaMagra.progress    = ((masaMagra / peso) * 100).toInt()
+                progressMasaMagra.progress    = ((masaMagra    / peso) * 100).toInt()
                 progressMasaMuscular.progress = ((masaMuscular / peso) * 100).toInt()
-                progressMasaGrasa.progress    = ((masaGrasa / peso) * 100).toInt()
+                progressMasaGrasa.progress    = ((masaGrasa    / peso) * 100).toInt()
             }
 
             // ── MÉTRICAS EXTRA ────────────────────────────────────
@@ -175,26 +168,6 @@ class MainActivity : AppCompatActivity() {
             tvTipoCuerpo.text     = tipoCuerpo
         }
 
-        // ── CALORÍAS DEL DÍA ──────────────────────────────────────
-        val fechaHoy = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
-        val calorias = obtenerCaloriasDia(usuarioId, fechaHoy)
-        val calObjetivo = medicion[3].toFloatOrNull() ?: 2000f
-
-        tvCalorias.text = "%.0f".format(calorias)
-        tvCaloriasConsumidas.text = "%.0f".format(calorias)
-
-        val progreso = if (calObjetivo > 0) ((calorias / calObjetivo) * 100).toInt().coerceIn(0, 100) else 0
-        progressCalorias.progress = progreso
-
-        val restantes = calObjetivo - calorias
-        if (restantes >= 0) {
-            tvCaloriasRestantes.text = "%.0f kcal restantes".format(restantes)
-            tvCaloriasEstado.text = "✓ Vas bien, te quedan %.0f kcal".format(restantes)
-        } else {
-            tvCaloriasRestantes.text = "%.0f kcal excedidas".format(-restantes)
-            tvCaloriasEstado.text = "⚠ Excediste tu objetivo por %.0f kcal".format(-restantes)
-        }
-
         // ── BOTONES ───────────────────────────────────────────────
         btnRegistrarComida.setOnClickListener {
             startActivity(Intent(this, RegistroComidaActivity::class.java))
@@ -202,6 +175,43 @@ class MainActivity : AppCompatActivity() {
 
         btnReportes.setOnClickListener {
             // TODO: ReportesActivity
+            startActivity(Intent(this, ReportesActivity::class.java))
+        }
+    }
+
+    // ── SE EJECUTA CADA VEZ QUE VUELVES AL DASHBOARD ─────────────
+    override fun onResume() {
+        super.onResume()
+
+        val prefs     = getSharedPreferences("NutriApp", MODE_PRIVATE)
+        val usuarioId = prefs.getInt("usuario_id", -1)
+        if (usuarioId == -1) return
+
+        val tvCalorias            = findViewById<TextView>(R.id.tvCalorias)
+        val tvCaloriasConsumidas  = findViewById<TextView>(R.id.tvCaloriasConsumidas)
+        val tvCaloriasRestantes   = findViewById<TextView>(R.id.tvCaloriasRestantes)
+        val tvCaloriasEstado      = findViewById<TextView>(R.id.tvCaloriasEstado)
+        val progressCalorias      = findViewById<ProgressBar>(R.id.progressCalorias)
+
+        val fechaHoy    = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        val calorias    = obtenerCaloriasDia(usuarioId, fechaHoy)
+        val medicion    = obtenerUltimaMedicion(usuarioId)
+        val calObjetivo = medicion[3].toFloatOrNull() ?: 2000f
+
+        tvCalorias.text           = "%.0f".format(calorias)
+        tvCaloriasConsumidas.text = "%.0f".format(calorias)
+
+        val progreso = if (calObjetivo > 0)
+            ((calorias / calObjetivo) * 100).toInt().coerceIn(0, 100) else 0
+        progressCalorias.progress = progreso
+
+        val restantes = calObjetivo - calorias
+        if (restantes >= 0) {
+            tvCaloriasRestantes.text = "%.0f kcal restantes".format(restantes)
+            tvCaloriasEstado.text    = "✓ Vas bien, te quedan %.0f kcal".format(restantes)
+        } else {
+            tvCaloriasRestantes.text = "%.0f kcal excedidas".format(-restantes)
+            tvCaloriasEstado.text    = "⚠ Excediste tu objetivo por %.0f kcal".format(-restantes)
         }
     }
 

@@ -14,19 +14,17 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // Inicializar base de datos
         val dbPath = filesDir.absolutePath + "/nutriapp.db"
         inicializarDB(dbPath)
 
-        val etCorreo = findViewById<EditText>(R.id.etCorreo)
+        val etCorreo     = findViewById<EditText>(R.id.etCorreo)
         val etContrasena = findViewById<EditText>(R.id.etContrasena)
-        val btnLogin = findViewById<Button>(R.id.btnLogin)
-        val tvRegistro = findViewById<TextView>(R.id.tvRegistro)
-        val tvError = findViewById<TextView>(R.id.tvError)
+        val btnLogin     = findViewById<Button>(R.id.btnLogin)
+        val tvRegistro   = findViewById<TextView>(R.id.tvRegistro)
+        val tvError      = findViewById<TextView>(R.id.tvError)
 
-        // Botón Login
         btnLogin.setOnClickListener {
-            val correo = etCorreo.text.toString().trim()
+            val correo    = etCorreo.text.toString().trim()
             val contrasena = etContrasena.text.toString().trim()
 
             if (correo.isEmpty() || contrasena.isEmpty()) {
@@ -41,11 +39,10 @@ class LoginActivity : AppCompatActivity() {
                 registrarLog(0, "LOGIN_FALLIDO", "Intento fallido: $correo", "Login", 0)
             } else {
                 val usuarioId = resultado[0].toInt()
-                val rolId = resultado[1].toInt()
+                val rolId     = resultado[1].toInt()
 
                 registrarLog(usuarioId, "LOGIN_EXITOSO", "Login exitoso", "Login", 1)
 
-                // Guardar sesión
                 val prefs = getSharedPreferences("NutriApp", MODE_PRIVATE)
                 prefs.edit()
                     .putInt("usuario_id", usuarioId)
@@ -53,11 +50,10 @@ class LoginActivity : AppCompatActivity() {
                     .putString("correo", correo)
                     .apply()
 
-                // Redirigir según rol
                 if (rolId == 1) {
-                    // SuperAdmin
+                    // SuperAdmin → AdminActivity
                     Toast.makeText(this, "Bienvenido Admin", Toast.LENGTH_SHORT).show()
-                    // TODO: ir a AdminActivity
+                    startActivity(Intent(this, AdminActivity::class.java))
                 } else {
                     // Usuario normal → verificar si tiene perfil
                     val tienePerfil = verificarPerfil(usuarioId)
@@ -66,12 +62,11 @@ class LoginActivity : AppCompatActivity() {
                     } else {
                         startActivity(Intent(this, PerfilActivity::class.java))
                     }
-                    finish()
                 }
+                finish()
             }
         }
 
-        // Ir a registro
         tvRegistro.setOnClickListener {
             startActivity(Intent(this, RegistroActivity::class.java))
         }

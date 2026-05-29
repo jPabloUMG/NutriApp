@@ -141,21 +141,7 @@ void cerrarDB() {
 //  ROLES
 // ══════════════════════════════════════════════════════════════════
 
-bool inicializarRoles() {
-    const char* sql =
-            "INSERT OR IGNORE INTO roles (id, nombre, descripcion) VALUES "
-            "(1, 'superadmin', 'Administrador con acceso total'),"
-            "(2, 'usuario', 'Usuario regular de la app');";
 
-    char* errMsg = nullptr;
-    int result = sqlite3_exec(db, sql, nullptr, nullptr, &errMsg);
-    if (result != SQLITE_OK) {
-        LOGE("Error insertando roles: %s", errMsg);
-        sqlite3_free(errMsg);
-        return false;
-    }
-    return true;
-}
 
 // ══════════════════════════════════════════════════════════════════
 //  USUARIOS
@@ -178,37 +164,66 @@ bool insertarUsuario(const Usuario& u) {
     return result == SQLITE_DONE;
 }
 
-// ── NUEVO: registra usuario y devuelve el ID generado (-1 si ya existe) ──
+
 int registrarUsuario(const std::string& correo, const std::string& contrasena) {
-    // Verificar si el correo ya existe
     const char* sqlCheck = "SELECT id FROM usuarios WHERE correo = ?;";
     sqlite3_stmt* stmtCheck;
     sqlite3_prepare_v2(db, sqlCheck, -1, &stmtCheck, nullptr);
     sqlite3_bind_text(stmtCheck, 1, correo.c_str(), -1, SQLITE_STATIC);
     if (sqlite3_step(stmtCheck) == SQLITE_ROW) {
         sqlite3_finalize(stmtCheck);
-        return -1; // ya existe
+        return -1;
     }
     sqlite3_finalize(stmtCheck);
 
-    // Insertar nuevo usuario con rol 2 (usuario normal)
     const char* sql =
             "INSERT INTO usuarios (correo, contrasena, rol_id, activo, fecha_registro) "
             "VALUES (?, ?, 2, 1, datetime('now'));";
 
     sqlite3_stmt* stmt;
     sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
-    sqlite3_bind_text(stmt, 1, correo.c_str(),    -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, correo.c_str(),     -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 2, contrasena.c_str(), -1, SQLITE_STATIC);
 
     int result = sqlite3_step(stmt);
     sqlite3_finalize(stmt);
 
-    if (result == SQLITE_DONE) {
+    if (result == SQLITE_DONE)
         return (int)sqlite3_last_insert_rowid(db);
-    }
-    return 0; // error genérico
+    return 0;
 }
+
+bool inicializarRoles() {
+    const char* sql =
+            "INSERT OR IGNORE INTO roles (id, nombre, descripcion) VALUES "
+            "(1, 'superadmin', 'Administrador con acceso total'),"
+            "(2, 'usuario', 'Usuario regular de la app');";
+
+    char* errMsg = nullptr;
+    int result = sqlite3_exec(db, sql, nullptr, nullptr, &errMsg);
+    if (result != SQLITE_OK) {
+        LOGE("Error insertando roles: %s", errMsg);
+        sqlite3_free(errMsg);
+        return false;
+    }
+
+    // ── SEMBRAR SUPERADMIN ────────────────────────────────────────
+    const char* sqlAdmin =
+            "INSERT OR IGNORE INTO usuarios "
+            "(id, correo, contrasena, rol_id, activo, fecha_registro) "
+            "VALUES (1, 'admin@nutriapp.com', 'admin123', 1, 1, datetime('now'));";
+
+    result = sqlite3_exec(db, sqlAdmin, nullptr, nullptr, &errMsg);
+    if (result != SQLITE_OK) {
+        LOGE("Error insertando admin: %s", errMsg);
+        sqlite3_free(errMsg);
+        return false;
+    }
+    // ─────────────────────────────────────────────────────────────
+
+    return true;
+}
+
 
 bool verificarLogin(const std::string& correo,
                     const std::string& contrasena,
@@ -219,7 +234,7 @@ bool verificarLogin(const std::string& correo,
 
     sqlite3_stmt* stmt;
     sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
-    sqlite3_bind_text(stmt, 1, correo.c_str(),    -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, correo.c_str(),     -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 2, contrasena.c_str(), -1, SQLITE_STATIC);
 
     bool found = false;
@@ -248,6 +263,15 @@ bool actualizarUltimoAcceso(int usuario_id, const std::string& fecha) {
 
 bool desactivarUsuario(int usuario_id) {
     const char* sql = "UPDATE usuarios SET activo = 0 WHERE id = ?;";
+    sqlite3_stmt* stmt;
+    sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
+    sqlite3_bind_int(stmt, 1, usuario_id);
+    int result = sqlite3_step(stmt);
+    sqlite3_finalize(stmt);
+    return result == SQLITE_DONE;
+}
+bool activarUsuario(int usuario_id) {
+    const char* sql = "UPDATE usuarios SET activo = 1 WHERE id = ?;";
     sqlite3_stmt* stmt;
     sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
     sqlite3_bind_int(stmt, 1, usuario_id);
@@ -358,12 +382,10 @@ Perfil obtenerPerfil(int usuario_id) {
     return p;
 }
 
-// ── NUEVO: guarda perfil + primera medición con cálculos automáticos ──
+// ── FIX: peso_lb se pasa directo a calculos.cpp, que ya convierte internamente ──
 bool guardarPerfil(const Perfil& p, float peso_lb, float porcentaje_grasa) {
-    // 1. Insertar/reemplazar perfil
-    Perfil perfil = p;
-    perfil.fecha_creacion = ""; // SQLite usará datetime('now')
 
+    // 1. Insertar/reemplazar perfil
     const char* sqlPerfil =
             "INSERT OR REPLACE INTO perfil "
             "(usuario_id, nombre, edad, genero, altura_cm, nivel_actividad, "
@@ -384,23 +406,20 @@ bool guardarPerfil(const Perfil& p, float peso_lb, float porcentaje_grasa) {
     sqlite3_finalize(stmt);
     if (result != SQLITE_DONE) return false;
 
-    // 2. Calcular métricas automáticamente con calculos.cpp
-    float altura_m = p.altura_cm / 100.0f;
-    float peso_kg  = peso_lb * 0.453592f;
-
-    float imc             = calcularIMC(peso_kg, altura_m);
-    float tmb             = calcularTMB(peso_kg, p.altura_cm, p.edad, p.genero);
-    float masa_grasa_lb   = peso_lb * (porcentaje_grasa / 100.0f);
-    float masa_magra_lb   = peso_lb - masa_grasa_lb;
-    float masa_muscular   = masa_magra_lb * 0.85f;
-    float masa_osea       = peso_lb * 0.15f;
-    float agua_pct        = (p.genero == "Masculino") ? 60.0f : 55.0f;
-    float grasa_visceral  = porcentaje_grasa / 5.0f;
-    int   edad_metabolica = p.edad;
-    float puntuacion      = 100.0f - (porcentaje_grasa * 0.5f);
-    std::string tipo      = (porcentaje_grasa < 15.0f) ? "Atletico" :
-                            (porcentaje_grasa < 25.0f) ? "Normal"   : "Alto";
-    float calorias_obj    = calcularCaloriasRecomendadas(tmb, p.nivel_actividad);
+    // 2. Calcular métricas — calculos.cpp convierte lb→kg internamente
+    float imc            = calcularIMC(peso_lb, p.altura_cm);
+    float tmb            = calcularTMB(peso_lb, p.altura_cm, p.edad, p.genero);
+    float masa_grasa_lb  = peso_lb * (porcentaje_grasa / 100.0f);
+    float masa_magra_lb  = peso_lb - masa_grasa_lb;
+    float masa_muscular  = masa_magra_lb * 0.85f;
+    float masa_osea      = peso_lb * 0.15f;
+    float agua_pct       = (p.genero == "Masculino") ? 60.0f : 55.0f;
+    float grasa_visceral = porcentaje_grasa / 5.0f;
+    int   edad_metabolica= p.edad;
+    float puntuacion     = 100.0f - (porcentaje_grasa * 0.5f);
+    std::string tipo     = (porcentaje_grasa < 15.0f) ? "Atletico" :
+                           (porcentaje_grasa < 25.0f) ? "Normal"   : "Alto";
+    float calorias_obj   = calcularCaloriasRecomendadas(tmb, p.nivel_actividad);
 
     // 3. Insertar primera medición
     const char* sqlMed =
@@ -649,10 +668,10 @@ bool insertarLog(const Log& l) {
     sqlite3_stmt* stmt;
     sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
     sqlite3_bind_int (stmt, 1, l.usuario_id);
-    sqlite3_bind_text(stmt, 2, l.accion.c_str(),    -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, l.detalle.c_str(),   -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 4, l.pantalla.c_str(),  -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 5, l.fecha_hora.c_str(),-1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, l.accion.c_str(),     -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, l.detalle.c_str(),    -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 4, l.pantalla.c_str(),   -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 5, l.fecha_hora.c_str(), -1, SQLITE_STATIC);
     sqlite3_bind_int (stmt, 6, l.exitoso);
 
     int result = sqlite3_step(stmt);
@@ -768,15 +787,15 @@ bool insertarReporte(const Reporte& r) {
     sqlite3_stmt* stmt;
     sqlite3_prepare_v2(db, sql, -1, &stmt, nullptr);
     sqlite3_bind_int   (stmt,  1, r.usuario_id);
-    sqlite3_bind_text  (stmt,  2, r.fecha_inicio.c_str(),       -1, SQLITE_STATIC);
-    sqlite3_bind_text  (stmt,  3, r.fecha_fin.c_str(),          -1, SQLITE_STATIC);
+    sqlite3_bind_text  (stmt,  2, r.fecha_inicio.c_str(),   -1, SQLITE_STATIC);
+    sqlite3_bind_text  (stmt,  3, r.fecha_fin.c_str(),      -1, SQLITE_STATIC);
     sqlite3_bind_double(stmt,  4, r.calorias_promedio);
     sqlite3_bind_double(stmt,  5, r.proteinas_promedio);
     sqlite3_bind_double(stmt,  6, r.carbs_promedio);
     sqlite3_bind_double(stmt,  7, r.grasas_promedio);
     sqlite3_bind_double(stmt,  8, r.peso_inicial_lb);
     sqlite3_bind_double(stmt,  9, r.peso_final_lb);
-    sqlite3_bind_text  (stmt, 10, r.fecha_generado.c_str(),     -1, SQLITE_STATIC);
+    sqlite3_bind_text  (stmt, 10, r.fecha_generado.c_str(), -1, SQLITE_STATIC);
 
     int result = sqlite3_step(stmt);
     sqlite3_finalize(stmt);
@@ -797,17 +816,17 @@ std::vector<Reporte> obtenerReportes(int usuario_id) {
 
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         Reporte r;
-        r.id                  = sqlite3_column_int(stmt, 0);
-        r.usuario_id          = sqlite3_column_int(stmt, 1);
-        r.fecha_inicio        = (const char*)sqlite3_column_text(stmt, 2);
-        r.fecha_fin           = (const char*)sqlite3_column_text(stmt, 3);
-        r.calorias_promedio   = (float)sqlite3_column_double(stmt, 4);
-        r.proteinas_promedio  = (float)sqlite3_column_double(stmt, 5);
-        r.carbs_promedio      = (float)sqlite3_column_double(stmt, 6);
-        r.grasas_promedio     = (float)sqlite3_column_double(stmt, 7);
-        r.peso_inicial_lb     = (float)sqlite3_column_double(stmt, 8);
-        r.peso_final_lb       = (float)sqlite3_column_double(stmt, 9);
-        r.fecha_generado      = (const char*)sqlite3_column_text(stmt, 10);
+        r.id                 = sqlite3_column_int(stmt, 0);
+        r.usuario_id         = sqlite3_column_int(stmt, 1);
+        r.fecha_inicio       = (const char*)sqlite3_column_text(stmt, 2);
+        r.fecha_fin          = (const char*)sqlite3_column_text(stmt, 3);
+        r.calorias_promedio  = (float)sqlite3_column_double(stmt, 4);
+        r.proteinas_promedio = (float)sqlite3_column_double(stmt, 5);
+        r.carbs_promedio     = (float)sqlite3_column_double(stmt, 6);
+        r.grasas_promedio    = (float)sqlite3_column_double(stmt, 7);
+        r.peso_inicial_lb    = (float)sqlite3_column_double(stmt, 8);
+        r.peso_final_lb      = (float)sqlite3_column_double(stmt, 9);
+        r.fecha_generado     = (const char*)sqlite3_column_text(stmt, 10);
         lista.push_back(r);
     }
     sqlite3_finalize(stmt);
@@ -827,19 +846,20 @@ std::vector<Reporte> obtenerTodosReportes() {
 
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         Reporte r;
-        r.id                  = sqlite3_column_int(stmt, 0);
-        r.usuario_id          = sqlite3_column_int(stmt, 1);
-        r.fecha_inicio        = (const char*)sqlite3_column_text(stmt, 2);
-        r.fecha_fin           = (const char*)sqlite3_column_text(stmt, 3);
-        r.calorias_promedio   = (float)sqlite3_column_double(stmt, 4);
-        r.proteinas_promedio  = (float)sqlite3_column_double(stmt, 5);
-        r.carbs_promedio      = (float)sqlite3_column_double(stmt, 6);
-        r.grasas_promedio     = (float)sqlite3_column_double(stmt, 7);
-        r.peso_inicial_lb     = (float)sqlite3_column_double(stmt, 8);
-        r.peso_final_lb       = (float)sqlite3_column_double(stmt, 9);
-        r.fecha_generado      = (const char*)sqlite3_column_text(stmt, 10);
+        r.id                 = sqlite3_column_int(stmt, 0);
+        r.usuario_id         = sqlite3_column_int(stmt, 1);
+        r.fecha_inicio       = (const char*)sqlite3_column_text(stmt, 2);
+        r.fecha_fin          = (const char*)sqlite3_column_text(stmt, 3);
+        r.calorias_promedio  = (float)sqlite3_column_double(stmt, 4);
+        r.proteinas_promedio = (float)sqlite3_column_double(stmt, 5);
+        r.carbs_promedio     = (float)sqlite3_column_double(stmt, 6);
+        r.grasas_promedio    = (float)sqlite3_column_double(stmt, 7);
+        r.peso_inicial_lb    = (float)sqlite3_column_double(stmt, 8);
+        r.peso_final_lb      = (float)sqlite3_column_double(stmt, 9);
+        r.fecha_generado     = (const char*)sqlite3_column_text(stmt, 10);
         lista.push_back(r);
     }
     sqlite3_finalize(stmt);
     return lista;
+
 }

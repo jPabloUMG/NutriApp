@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F5F5F5">
+
+    <!-- HEADER -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#1565C0"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="⚙ Panel Admin"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvAdminSubtitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cargando estadísticas..."
+            android:textColor="#B3E5FC"
+            android:textSize="13sp"/>
+    </LinearLayout>
+
+    <!-- TABS -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#1976D2">
+
+        <Button
+            android:id="@+id/btnTabUsuarios"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="👥 Usuarios"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:background="#1565C0"
+            android:padding="12dp"/>
+
+        <Button
+            android:id="@+id/btnTabLogs"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="📋 Logs"
+            android:textColor="#90CAF9"
+            android:textSize="13sp"
+            android:background="#1976D2"
+            android:padding="12dp"/>
+
+        <Button
+            android:id="@+id/btnTabStats"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="📊 Stats"
+            android:textColor="#90CAF9"
+            android:textSize="13sp"
+            android:background="#1976D2"
+            android:padding="12dp"/>
+    </LinearLayout>
+
+    <!-- CONTENIDO TABS -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <!-- TAB USUARIOS -->
+            <LinearLayout
+                android:id="@+id/tabUsuarios"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"/>
+
+            <!-- TAB LOGS -->
+            <LinearLayout
+                android:id="@+id/tabLogs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"/>
+
+            <!-- TAB STATS -->
+            <LinearLayout
+                android:id="@+id/tabStats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"/>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

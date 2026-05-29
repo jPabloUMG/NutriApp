@@ -174,5 +174,6 @@ bool validarSesion(const std::string& token);
 bool insertarReporte(const Reporte& r);
 std::vector<Reporte> obtenerReportes(int usuario_id);
 std::vector<Reporte> obtenerTodosReportes();
+bool activarUsuario(int usuario_id);
 
 #endif //NUTRIAPP_DATABASE_H
