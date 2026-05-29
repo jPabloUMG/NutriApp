@@ -33,4 +33,13 @@
         android:backgroundTint="#1565C0"
         android:text="Volver al inicio"
         android:textColor="#FFFFFF" />
+    <Button
+        android:id="@+id/btnRecomendaciones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="💡 Recomendaciones"
+        android:backgroundTint="#4CAF50"
+        android:textColor="#FFFFFF"
+        android:padding="10dp"
+        android:layout_marginStart="12dp"/>
 </LinearLayout>

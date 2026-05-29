@@ -26,6 +26,74 @@ class ReportesActivity : AppCompatActivity() {
             finish()
         }
 
+        val btnRecomendaciones = findViewById<Button>(R.id.btnRecomendaciones)
+        btnRecomendaciones.setOnClickListener {
+            val prefs = getSharedPreferences("NutriApp", MODE_PRIVATE)
+            val usuarioId = prefs.getInt("usuario_id", -1)
+
+            // ✅ Ajuste: usar dd/MM/yyyy porque así viene de la BD
+            val fechaHoy = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+            val comidas = obtenerComidasDesdeNativo(usuarioId)
+
+            // Depuración opcional
+            comidas.forEach {
+                Log.d("NutriApp", "DEBUG -> Nombre=${it.nombre}, Fecha=${it.fecha}, Tiempo=${it.tiempoComida}, Calorias=${it.calorias}")
+            }
+
+            var totalCalorias = 0f
+            var totalProteinas = 0f
+            var totalCarbos = 0f
+            var totalGrasas = 0f
+
+            val comidasHoy = comidas.filter { it.fecha == fechaHoy }
+
+            comidasHoy.forEach {
+                val kcal = if (it.calorias > 0) it.calorias else (it.proteinas * 4 + it.carbohidratos * 4 + it.grasas * 9)
+                totalCalorias += kcal
+                totalProteinas += it.proteinas
+                totalCarbos += it.carbohidratos
+                totalGrasas += it.grasas
+            }
+
+            if (totalCalorias <= 0f) {
+                android.app.AlertDialog.Builder(this)
+                    .setTitle("Recomendaciones Nutricionales")
+                    .setMessage("⚠ No hay datos de consumo registrados para hoy.")
+                    .setPositiveButton("OK", null)
+                    .show()
+                return@setOnClickListener
+            }
+
+            val kcalProteinas = totalProteinas * 4
+            val kcalCarbos    = totalCarbos * 4
+            val kcalGrasas    = totalGrasas * 9
+
+            val porcentajeProteinas = (kcalProteinas / totalCalorias) * 100
+            val porcentajeCarbos    = (kcalCarbos / totalCalorias) * 100
+            val porcentajeGrasas    = (kcalGrasas / totalCalorias) * 100
+
+            val recomendaciones = mutableListOf<String>()
+            if (porcentajeProteinas < 15f) recomendaciones.add("⚠ Tus proteínas son bajas (${porcentajeProteinas.toInt()}%). Incluye más carnes magras, huevos o legumbres.")
+            if (porcentajeCarbos > 60f) recomendaciones.add("⚠ Exceso de carbohidratos (${porcentajeCarbos.toInt()}%). Controla pan, pasta y arroz.")
+            if (porcentajeGrasas > 35f) recomendaciones.add("⚠ Alto consumo de grasas (${porcentajeGrasas.toInt()}%). Reduce frituras y embutidos.")
+            if (totalCalorias > 3500f) recomendaciones.add("⚠ Consumo calórico muy alto (${totalCalorias.toInt()} kcal). Procura balancear con actividad física.")
+
+            if (recomendaciones.isEmpty()) recomendaciones.add("✓ Tu consumo está dentro de parámetros saludables.")
+
+            android.app.AlertDialog.Builder(this)
+                .setTitle("Recomendaciones Nutricionales")
+                .setMessage(recomendaciones.joinToString("\n"))
+                .setPositiveButton("OK", null)
+                .show()
+        }
+
+
+
+
+
+
+
+
         val prefs = getSharedPreferences("NutriApp", MODE_PRIVATE)
         val usuarioId = prefs.getInt("usuario_id", -1)
 
