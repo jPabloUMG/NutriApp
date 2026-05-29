@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@drawable/one">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#0E381E"
         android:orientation="vertical"
         android:padding="24dp">
 
@@ -173,8 +175,8 @@
                 android:paddingStart="4dp"
                 android:text="Tiempo de comida"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <!-- MENÚ DESPLEGABLE MATERIAL DESIGN -->
             <com.google.android.material.textfield.TextInputLayout
@@ -208,8 +210,8 @@
                 android:paddingStart="4dp"
                 android:text="Nombre del alimento"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/etNombre"
@@ -235,8 +237,8 @@
                 android:paddingStart="4dp"
                 android:text="Cantidad"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/etCantidad"
@@ -282,8 +284,8 @@
                 android:paddingStart="4dp"
                 android:text="Calorías"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/etCalorias"
@@ -309,8 +311,8 @@
                 android:paddingStart="4dp"
                 android:text="Proteínas"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/etProteinas"
@@ -336,8 +338,8 @@
                 android:paddingStart="4dp"
                 android:text="Carbohidratos"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/etCarbos"
@@ -363,8 +365,8 @@
                 android:paddingStart="4dp"
                 android:text="Grasas"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:textStyle="bold" />
 
             <EditText
                 android:id="@+id/etGrasas"
@@ -406,8 +408,8 @@
                 android:gravity="center"
                 android:text="Los datos se guardan en tu historial diario"
                 android:textColor="@color/white"
-                android:textStyle="bold"
-                android:textSize="11sp" />
+                android:textSize="11sp"
+                android:textStyle="bold" />
 
         </LinearLayout>
     </LinearLayout>

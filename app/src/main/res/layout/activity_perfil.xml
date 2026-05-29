@@ -323,7 +323,7 @@
             android:background="#E0E0E0"
             android:layout_marginBottom="20dp"/>
 
-        <!--  Error General (tvError se mantiene para validaciones globales) -->
+        <!--  Error General  -->
         <TextView
             android:id="@+id/tvError"
             android:layout_width="match_parent"

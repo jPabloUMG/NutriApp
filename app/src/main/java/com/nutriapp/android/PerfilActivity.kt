@@ -2,6 +2,7 @@ package com.nutriapp.android
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 
@@ -28,6 +29,8 @@ class PerfilActivity : AppCompatActivity() {
         val etGrasa    = findViewById<EditText>(R.id.etGrasa)
         val btnGuardar = findViewById<Button>(R.id.btnGuardar)
         val tvError    = findViewById<TextView>(R.id.tvError)
+        // Se vincula el TextView de error específico de la edad
+        val tvErrorEdad = findViewById<TextView>(R.id.tvErrorEdad)
 
         val generos = arrayOf("Masculino", "Femenino")
 
@@ -45,6 +48,10 @@ class PerfilActivity : AppCompatActivity() {
             val peso   = etPeso.text.toString().trim()
             val grasa  = etGrasa.text.toString().trim()
 
+
+            tvError.text = ""
+            tvErrorEdad.visibility = View.GONE
+
             if (nombre.isEmpty() || edad.isEmpty() || genero.isEmpty() || altura.isEmpty()
                 || peso.isEmpty() || grasa.isEmpty()) {
                 tvError.text = "Completa todos los campos, incluyendo el género"
@@ -56,6 +63,16 @@ class PerfilActivity : AppCompatActivity() {
                 val alturaFloat = altura.toFloat()
                 val pesoFloat = peso.toFloat()
                 val grasaFloat = grasa.toFloat()
+
+                // --- NUEVA VALIDACIÓN DE EDAD SOLICITADA ---
+                // Verifica que la edad esté en un rango real (ejemplo: entre 1 y 110 años)
+                if (edadInt < 1 || edadInt > 110) {
+                    tvErrorEdad.text = "Ingresa una edad válida (entre 1 y 110 años)"
+                    tvErrorEdad.visibility = View.VISIBLE // Muestra el texto rojo de error
+                    etEdad.requestFocus() // Mueve el cursor al input de edad
+                    return@setOnClickListener // Detiene el flujo para que no guarde los datos
+                }
+                // -------------------------------------------
 
                 val exito = guardarPerfil(
                     usuarioId,
